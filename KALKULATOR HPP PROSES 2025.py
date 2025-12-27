@@ -78,7 +78,7 @@ if menu == "🏠 Dashboard":
     
     # Menambah gambar di bagian bawah dashboard
     st.markdown("<br><br>", unsafe_allow_html=True)
-    st.image("https://img.freepik.com/free-vector/data-report-concept-illustration_114360-883.jpg", use_container_width=True), 
+    st.image("https://img.freepik.com/free-vector/data-report-concept-illustration_114360-883.jpg", use_container_width=True)
             
 # --- HALAMAN PERHITUNGAN HPP ---
 elif menu == "🏭 Perhitungan HPP":
@@ -158,6 +158,7 @@ elif menu == "🏭 Perhitungan HPP":
                         <span class="ue-val">{v:,.1f}</span>
                     </div>
                 """, unsafe_allow_html=True)
+
 
 
 

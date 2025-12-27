@@ -1,4 +1,4 @@
-import streamlit as st
+mport streamlit as st
 
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="Kalkulator HPP Akuntansi", page_icon="📊", layout="wide")
@@ -11,13 +11,13 @@ st.markdown("""
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, h4, p, label, .stMarkdown { color: #E0E1DD !important; font-family: 'Inter', sans-serif; }
     
-    /* Input Container dengan Glassmorphism Lebih Halus - UKURAN DIPERKECIL */
+    /* Input Container DIPERKECIL min-height-nya agar lebih hemat ruang */
     .input-box {
         background: rgba(27, 38, 59, 0.6);
         border: 1px solid rgba(119, 141, 169, 0.4);
         padding: 20px;
         border-radius: 24px;
-        min-height: 400px; /* Diperkecil dari 480px agar lebih ramping */
+        min-height: 320px; /* Diperkecil dari 400px agar lebih ramping */
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
@@ -72,14 +72,15 @@ st.divider()
 # --- HALAMAN DASHBOARD ---
 if menu == "🏠 Dashboard":
     st.markdown("## 👋 Selamat Datang di Dashboard Utama")
-    st.write("Sistem Informasi Akuntansi untuk efisiensi produksi.")
+    st.write("Sistem Informasi Akuntansi Biaya untuk efisiensi produksi.")
     with st.expander("🔵 Akurasi Data"):
         st.info("Perhitungan HPP sesuai standar PSAK (Metode Rata-Rata).")
     with st.expander("🟢 Efisiensi Biaya"):
         st.success("Pantau penyerapan biaya per elemen produksi secara mendetail.")
     with st.expander("🟡 Laporan Otomatis"):
         st.warning("Unit ekuivalen dan biaya dialokasikan secara instan.")
-    st.image("https://img.freepik.com/free-vector/data-report-concept-illustration_114360-883.jpg", use_container_width=True)
+    
+    # GAMBAR KOTAK BESAR DI DASHBOARD TELAH DIHAPUS UNTUK MENGHEMAT RUANG
 
 # --- HALAMAN PERHITUNGAN HPP ---
 elif menu == "🏭 Perhitungan HPP":
@@ -90,7 +91,7 @@ elif menu == "🏭 Perhitungan HPP":
     with c1:
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 📦 Volume Unit")
-        # Tambahan Gambar Sesuai Foto (Unit/Logistik)
+        # Ikon tetap dipertahankan namun ukuran tetap kecil (60px)
         st.image("https://cdn-icons-png.flaticon.com/512/5164/5164023.png", width=60)
         st.write("Masukkan data kuantitas barang.")
         jadi = st.number_input("Unit Selesai (Jadi)", min_value=0, step=1)
@@ -100,7 +101,6 @@ elif menu == "🏭 Perhitungan HPP":
     with c2:
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 💰 Alokasi Biaya")
-        # Tambahan Gambar Sesuai Foto (Biaya/Finance)
         st.image("https://cdn-icons-png.flaticon.com/512/2454/2454282.png", width=60)
         st.write("Input total biaya yang terjadi.")
         bbb = st.number_input("Biaya Bahan Baku", min_value=0)
@@ -112,7 +112,6 @@ elif menu == "🏭 Perhitungan HPP":
     with c3:
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 📈 Progress PDP (%)")
-        # Tambahan Gambar Sesuai Foto (Progress/Persentase)
         st.image("https://cdn-icons-png.flaticon.com/512/1548/1548914.png", width=60)
         st.write("Tingkat penyelesaian barang.")
         tp_bbb = st.number_input("Penyelesaian BBB (%)", 0, 100, 100) / 100
@@ -124,9 +123,6 @@ elif menu == "🏭 Perhitungan HPP":
     if st.button("🚀 JALANKAN ANALISIS HPP SEKARANG"):
         # Logika Kalkulator
         ue_bbb, ue_bbp = jadi + (pdp * tp_bbb), jadi + (pdp * tp_bbp)
-        ue_btk, ue_bop = jadi + (pdp * tp_btk), jadi + (pdp * ue_btk) # Note: ue_btk typo in previous, but kept logic
-        
-        # Recalculate based on TP
         ue_btk = jadi + (pdp * tp_btk)
         ue_bop = jadi + (pdp * tp_bop)
         
@@ -164,6 +160,8 @@ elif menu == "🏭 Perhitungan HPP":
                         <span class="ue-val">{v:,.1f}</span>
                     </div>
                 """, unsafe_allow_html=True)
+
+
 
 
 

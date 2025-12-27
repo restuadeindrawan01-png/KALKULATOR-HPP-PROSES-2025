@@ -15,8 +15,7 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     header {visibility: hidden;}
     footer {visibility: hidden;}
-    .stDeployButton {display:none;} 
-    
+        
     /* Kartu Hasil Perhitungan (Output) */
     .card-output {
         padding: 35px;
@@ -164,6 +163,7 @@ elif menu == "🏭 Perhitungan HPP":
                         <span class="ue-val">{v:,.1f}</span>
                     </div>
                 """, unsafe_allow_html=True)
+
 
 
 

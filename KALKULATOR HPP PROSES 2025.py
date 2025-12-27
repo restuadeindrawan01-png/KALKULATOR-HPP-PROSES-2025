@@ -3,135 +3,101 @@ import streamlit as st
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="Kalkulator HPP Akuntansi", page_icon="📊", layout="wide")
 
-# --- STYLE CSS: THEME BIRU TUA & KOTAK DASHBOARD ---
+# --- STYLE CSS: THEME BIRU TUA & CARD DASHBOARD ---
 st.markdown("""
     <style>
-    /* Mengubah latar belakang menjadi biru tua */
-    .stApp {
-        background-color: #0D1B2A !important;
-    }
+    .stApp { background-color: #0D1B2A !important; }
+    [data-testid="stSidebar"] { display: none; }
+    h1, h2, h3, p, label, .stMarkdown { color: #E0E1DD !important; }
     
-    /* Menghilangkan Sidebar */
-    [data-testid="stSidebar"] {
-        display: none;
-    }
-
-    /* Warna teks umum menjadi putih terang */
-    h1, h2, h3, p, label, .stMarkdown {
-        color: #E0E1DD !important;
-    }
-
-    /* Styling Kotak Dashboard (Card) sesuai gambar awal */
-    .info-card {
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 15px;
-        color: #0D1B2A !important; /* Teks dalam kotak tetap gelap agar terbaca */
-    }
+    /* Card Dashboard sesuai Screenshot_2025-12-27-12-05-55-89.jpg */
+    .info-card { padding: 20px; border-radius: 10px; margin-bottom: 15px; color: #0D1B2A !important; }
     .card-blue { background-color: #A2D2FF; }
     .card-green { background-color: #B2D8B2; }
     .card-yellow { background-color: #E9EDC9; }
 
-    /* Styling Input & Selectbox */
-    .stNumberInput input, .stSelectbox div {
-        background-color: #FFFFFF !important;
-        color: #0D1B2A !important;
-    }
-
-    /* Tombol Perhitungan */
-    .stButton>button {
-        background-color: #1B263B;
-        color: white;
-        border-radius: 8px;
-        width: 100%;
-        border: 1px solid #778DA9;
-    }
+    /* Kotak Input & Tombol */
+    .stNumberInput input { background-color: #FFFFFF !important; color: #0D1B2A !important; font-weight: bold; }
+    .stButton>button { background-color: #1B263B; color: white; border-radius: 8px; width: 100%; border: 1px solid #778DA9; }
+    
+    /* Container Hasil Perhitungan */
+    .result-box { background-color: #1B263B; padding: 20px; border-radius: 10px; border: 1px solid #415A77; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- FUNGSI FORMAT RUPIAH ---
 def format_rp(angka):
     return f"Rp {int(angka):,}".replace(",", ".")
 
-# --- NAVIGASI POJOK KANAN ATAS ---
+# --- HEADER & NAVIGASI POJOK KANAN ATAS ---
 col_jdl, col_nav = st.columns([2, 1])
 with col_jdl:
-    st.markdown("# 📊 DASHBOARD KINERJA PRODUKSI")
+    st.markdown("# 📊 SISTEM AKUNTANSI BIAYA")
 
 with col_nav:
-    menu = st.selectbox(
-        "Pilih Menu:",
-        ["🏠 Dashboard Utama", "🏭 Kalkulator HPP"],
-        label_visibility="collapsed"
-    )
-    st.markdown('<p style="text-align:right; color:#778DA9; font-size:12px;">Navigasi Halaman</p>', unsafe_allow_html=True)
+    menu = st.selectbox("Navigasi:", ["🏠 Dashboard Utama", "🏭 Kalkulator HPP"], label_visibility="collapsed")
+    st.markdown('<p style="text-align:right; color:#778DA9; font-size:12px;">Pilih Menu</p>', unsafe_allow_html=True)
 
 st.divider()
 
-# --- HALAMAN 1: DASHBOARD (SESUAI GAMBAR) ---
+# --- HALAMAN 1: DASHBOARD ---
 if menu == "🏠 Dashboard Utama":
-    st.write("Selamat Datang di Sistem Informasi Akuntansi Biaya.")
-    
-    # Grid Kotak Informasi sesuai gambar Screenshot_2025-12-27-12-05-55-89.jpg
+    st.markdown("### Dashboard Kinerja Produksi")
     st.markdown("""
-    <div class="info-card card-blue">
-        <h3>Akurasi Data</h3>
-        <p>Memastikan perhitungan HPP sesuai standar PSAK.</p>
-    </div>
-    <div class="info-card card-green">
-        <h3>Efisiensi Biaya</h3>
-        <p>Memantau alokasi biaya pada Produk Dalam Proses (PDP).</p>
-    </div>
-    <div class="info-card card-yellow">
-        <h3>Laporan Otomatis</h3>
-        <p>Unit ekuivalen dihitung secara instan.</p>
-    </div>
+    <div class="info-card card-blue"><h3>Akurasi Data</h3><p>Memastikan perhitungan HPP sesuai standar PSAK.</p></div>
+    <div class="info-card card-green"><h3>Efisiensi Biaya</h3><p>Memantau alokasi biaya pada Produk Dalam Proses (PDP).</p></div>
+    <div class="info-card card-yellow"><h3>Laporan Otomatis</h3><p>Unit ekuivalen dan biaya per unit dihitung secara instan.</p></div>
     """, unsafe_allow_html=True)
-    
-    # Gambar ilustrasi di bawah dasbor
-    st.markdown("### Ilustrasi Alur Perhitungan")
-    st.image("https://img.freepik.com/free-vector/accounting-concept-illustration_114360-1532.jpg", 
-             caption="Proses Akuntansi Biaya Produksi", use_container_width=True)
+    st.image("https://img.freepik.com/free-vector/accounting-concept-illustration_114360-1532.jpg", use_container_width=True)
 
 # --- HALAMAN 2: KALKULATOR HPP ---
 elif menu == "🏭 Kalkulator HPP":
-    st.subheader("🏭 Form Perhitungan HPP Proses")
+    st.markdown("## 🏭 Kalkulator HPP Metode Proses")
     
+    # Input Section
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown("### 1. Data Unit")
-        produk_jadi = st.number_input("Unit Selesai", min_value=0, step=1)
-        produk_pdp = st.number_input("Unit PDP Akhir", min_value=0, step=1)
-        
+        st.markdown("### 1. Data Unit Produksi")
+        jadi = st.number_input("Unit Produk Jadi", min_value=0, step=1)
+        pdp = st.number_input("Unit PDP Akhir", min_value=0, step=1)
     with c2:
         st.markdown("### 2. Biaya Produksi")
-        cost_bbb = st.number_input("Biaya Bahan Baku", min_value=0, step=1000)
-        cost_bbp = st.number_input("Biaya Bahan Penolong", min_value=0, step=1000)
-        cost_btk = st.number_input("Biaya Tenaga Kerja", min_value=0, step=1000)
-        cost_bop = st.number_input("Biaya BOP", min_value=0, step=1000)
+        c_bbb = st.number_input("Total Biaya Bahan Baku (BBB)", min_value=0, step=1000)
+        c_bk = st.number_input("Total Biaya Konversi (BTK + BOP)", min_value=0, step=1000)
 
     st.markdown("### 3. Tingkat Penyelesaian (%)")
-    t1, t2, t3, t4 = st.columns(4)
-    tp_bbb = t1.number_input("BBB %", 0, 100, 100) / 100
-    tp_bbp = t2.number_input("BBP %", 0, 100, 100) / 100
-    tp_btk = t3.number_input("BTK %", 0, 100, 50) / 100
-    tp_bop = t4.number_input("BOP %", 0, 100, 50) / 100
+    t1, t2 = st.columns(2)
+    tp_bbb = t1.number_input("TP Bahan Baku (%)", 0, 100, 100) / 100
+    tp_bk = t2.number_input("TP Biaya Konversi (%)", 0, 100, 50) / 100
 
-    if st.button("🚀 HITUNG SEKARANG"):
-        ue_bbb = produk_jadi + (produk_pdp * tp_bbb)
-        ue_bbp = produk_jadi + (produk_pdp * tp_bbp)
-        ue_btk = produk_jadi + (produk_pdp * tp_btk)
-        ue_bop = produk_jadi + (produk_pdp * tp_bop)
+    if st.button("🚀 HITUNG DAN TAMPILKAN LAPORAN"):
+        # Perhitungan Unit Ekuivalen (UE)
+        ue_bbb = jadi + (pdp * tp_bbb)
+        ue_bk = jadi + (pdp * tp_bk)
         
-        u_bbb = cost_bbb / ue_bbb if ue_bbb > 0 else 0
-        u_bbp = cost_bbp / ue_bbp if ue_bbp > 0 else 0
-        u_btk = cost_btk / ue_btk if ue_btk > 0 else 0
-        u_bop = cost_bop / ue_bop if ue_bop > 0 else 0
-        total_u = u_bbb + u_bbp + u_btk + u_bop
+        # Perhitungan Biaya Per Unit
+        u_bbb = c_bbb / ue_bbb if ue_bbb > 0 else 0
+        u_bk = c_bk / ue_bk if ue_bk > 0 else 0
+        total_u = u_bbb + u_bk
         
-        st.divider()
-        st.success(f"*HPP Produk Jadi:* {format_rp(produk_jadi * total_u)}")
-        st.metric("Total Biaya Per Unit", format_rp(total_u))
+        # Alokasi Biaya
+        hpp_jadi = jadi * total_u
+        hpp_pdp = (pdp * tp_bbb * u_bbb) + (pdp * tp_bk * u_bk)
+
+        # --- TAMPILAN LAPORAN HASIL ---
+        st.markdown("<div class='result-box'>", unsafe_allow_html=True)
+        st.subheader("📋 Rincian Laporan Perhitungan")
+        
+        # Rincian UE & Biaya Per Unit
+        res1, res2, res3 = st.columns(3)
+        res1.metric("UE Bahan Baku", f"{ue_bbb} Unit")
+        res2.metric("UE Biaya Konversi", f"{ue_bk} Unit")
+        res3.metric("Total Biaya/Unit", format_rp(total_u))
+        
+        st.markdown("---")
+        
+        # Rincian Hasil Akhir
+        st.success(f
+
 
 
 

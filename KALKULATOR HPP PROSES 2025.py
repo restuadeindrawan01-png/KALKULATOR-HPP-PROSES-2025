@@ -64,13 +64,22 @@ if menu == "🏠 Dashboard":
     st.markdown("## 👋 Selamat Datang di Dashboard Utama")
     st.write("Sistem Informasi Akuntansi Biaya untuk efisiensi produksi.")
     with st.expander("🔵 Akurasi Data"):
-        st.info("Perhitungan HPP sesuai standar PSAK (Metode Rata-Rata).")
+        st.info("""**Akurasi Tinggi:**Sistem ini menggunakan rumus perhitungan Unit Ekuivalen yang presisi. 
+        Data biaya diakumulasikan berdasarkan tingkat penyelesaian (PDP), memastikan tidak ada 
+        biaya yang tumpang tindih antara produk jadi dan produk dalam proses.""")
     with st.expander("🟢 Efisiensi Biaya"):
-        st.success("Pantau penyerapan biaya per elemen produksi secara mendetail.")
+        st.success("""**Optimalisasi Anggaran:**Mempermudah dalam Pemantauan elemen produksi secara mendetail seperti; distribusi biaya Bahan Baku (BBB), Bahan Penolong (BBP), 
+        Tenaga Kerja (BTK), hingga Overhead (BOP). Dengan mengetahui biaya per unit secara detail, 
+        perusahaan dapat melakukan efisiensi pada pos biaya yang membengkak.""")
     with st.expander("🟡 Laporan Otomatis"):
-        st.warning("Unit ekuivalen dan biaya dialokasikan secara instan.")
+        st.warning("""**Kecepatan Analisis:* Membantu mempermudah dan mempersingkat, dari perhitungan manual yang rumit. Cukup masukkan data produksi 
+        dan persentase penyelesaian, sistem akan menyajikan laporan HPP dan nilai persediaan PDP 
+        secara instan dalam hitungan detik.""")
     
-    # GAMBAR KOTAK BESAR DI DASHBOARD TELAH DIHAPUS UNTUK MENGHEMAT RUANG
+    # Menambah gambar di bagian bawah dashboard
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.image("https://img.freepik.com/free-vector/factory-concept-illustration_114360-1557.jpg", 
+             caption="Visualisasi Aliran Produksi & Akuntansi Biaya", use_container_width=True)
 
 # --- HALAMAN PERHITUNGAN HPP ---
 elif menu == "🏭 Perhitungan HPP":
@@ -150,6 +159,7 @@ elif menu == "🏭 Perhitungan HPP":
                         <span class="ue-val">{v:,.1f}</span>
                     </div>
                 """, unsafe_allow_html=True)
+
 
 
 

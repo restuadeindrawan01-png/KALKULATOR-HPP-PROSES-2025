@@ -3,7 +3,7 @@ import streamlit as st
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="Kalkulator HPP Akuntansi", page_icon="📊", layout="wide")
 
-# --- 1. INISIALISASI SESSION STATE (Agar data tidak hilang saat pindah halaman) ---
+# --- 1. INISIALISASI SESSION STATE ---
 if 'data_hpp' not in st.session_state:
     st.session_state.data_hpp = {
         'total_u': 0, 
@@ -16,17 +16,14 @@ if 'data_hpp' not in st.session_state:
 # --- STYLE CSS: PREMIUM DARK MODE ---
 st.markdown("""
     <style>
-    /* Latar Belakang & Font Global */
     .stApp { background-color: #0D1B2A !important; }
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, h4, p, label, .stMarkdown { color: #E0E1DD !important; font-family: 'Inter', sans-serif; }
 
-    /* MENYEMBUNYIKAN BRANDING STREAMLIT */
     #MainMenu {visibility: hidden;}
     header {visibility: hidden;}
     footer {visibility: hidden;}
         
-    /* Kartu Hasil Perhitungan (Output) */
     .card-output {
         padding: 35px;
         border-radius: 20px;
@@ -39,7 +36,6 @@ st.markdown("""
     .yelow-grad { background: linear-gradient(135deg, #b8860b 0%, #daa520 100%); }
     .gold-grad { background: linear-gradient(135deg, #434343 0%, #000000 100%); border: 1px solid #daa520; }
 
-    /* Unit Ekuivalen Modern Vertikal */
     .ue-modern {
         background: #1B263B;
         padding: 15px 20px;
@@ -52,7 +48,6 @@ st.markdown("""
     }
     .ue-val { font-size: 22px; font-weight: 800; color: #A2D2FF; }
 
-    /* Tombol Analisis Besar */
     .stButton>button { 
         background: linear-gradient(90deg, #415A77 0%, #778DA9 100%);
         color: white; border-radius: 15px; width: 100%; font-weight: bold; 
@@ -71,7 +66,6 @@ c_head, c_nav = st.columns([2.5, 1.5])
 with c_head:
     st.markdown("# 📊 SISTEM AKUNTANSI BIAYA")
 with c_nav:
-    # EDIT: Menambahkan opsi Analisis Profitabilitas ke menu selectbox
     menu = st.selectbox("", ["🏠 Dashboard", "🏭 Perhitungan HPP", "💰 Analisis Profitabilitas"], label_visibility="collapsed")
     st.markdown(f'<p style="text-align:right; color:#778DA9; font-size:13px; margin-top:-10px;">Menu Aktif: {menu}</p>', unsafe_allow_html=True)
 
@@ -81,18 +75,22 @@ st.divider()
 if menu == "🏠 Dashboard":
     st.markdown("## 👋 Selamat Datang di Dashboard Utama")
     st.write("Sistem Informasi Akuntansi Biaya untuk efisiensi produksi.")
+    
+    # KOREKSI: Memperbaiki string literal dan indentasi expander
     with st.expander("🔵 Akurasi Data"):
-        st.info("Akurasi Tinggi: Sistem menggunakan rumus Unit Ekuivalen yang presisi untuk memisahkan biaya produk jadi dan PDP. 
+        st.info("""*Akurasi Tinggi:* Sistem menggunakan rumus Unit Ekuivalen yang presisi untuk memisahkan biaya produk jadi dan PDP. 
         Data biaya diakumulasikan berdasarkan tingkat penyelesaian (PDP), memastikan tidak ada 
-        biaya yang tumpang tindih antara produk jadi dan produk dalam proses.")
+        biaya yang tumpang tindih antara produk jadi dan produk dalam proses.""")
+        
     with st.expander("🟢 Efisiensi Biaya"):
-        st.success("Optimalisasi Anggaran: Mempermudah dalam Pemantauan elemen produksi secara mendetail seperti; distribusi biaya Bahan Baku (BBB), Bahan Penolong (BBP), 
+        st.success("""*Optimalisasi Anggaran:* Mempermudah dalam Pemantauan elemen produksi secara mendetail seperti; distribusi biaya Bahan Baku (BBB), Bahan Penolong (BBP), 
         Tenaga Kerja (BTK), hingga Overhead (BOP). Dengan mengetahui biaya per unit secara detail, 
-        perusahaan dapat melakukan efisiensi pada pos biaya yang membengkak.")
-   with st.expander("🟡 Laporan Otomatis"):
-        st.warning("Kecepatan Analisis: Membantu mempermudah dan mempersingkat, dari perhitungan manual yang rumit. Cukup masukkan data produksi 
+        perusahaan dapat melakukan efisiensi pada pos biaya yang membengkak.""")
+        
+    with st.expander("🟡 Laporan Otomatis"):
+        st.warning("""*Kecepatan Analisis:* Membantu mempermudah dan mempersingkat, dari perhitungan manual yang rumit. Cukup masukkan data produksi 
         dan persentase penyelesaian, sistem akan menyajikan laporan HPP dan nilai persediaan PDP 
-        secara instan dalam hitungan detik.")     
+        secara instan dalam hitungan detik.""")     
     
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.image("https://img.freepik.com/free-vector/data-report-concept-illustration_114360-883.jpg", use_container_width=True)
@@ -143,82 +141,12 @@ elif menu == "🏭 Perhitungan HPP":
         h_jadi = jadi * total_u
         h_pdp = (pdp*tp_bbb*u_bbb) + (pdp*tp_bbp*u_bbp) + (pdp*tp_btk*u_btk) + (pdp*tp_bop*u_bop)
 
-        # EDIT: Menyimpan data ke Session State agar bisa dibaca di halaman Profitabilitas
+        # Simpan ke Session State
         st.session_state.data_hpp = {
             'total_u': total_u, 
             'h_jadi': h_jadi, 
             'h_pdp': h_pdp, 
-            'unit_jadi': jadi
-        }
-
-        st.divider()
-        st.markdown("### 📋 Hasil Perhitungan HPP")
-        res_l, res_r = st.columns([1.8, 1], gap="medium")
-        
-        with res_l:
-            st.markdown(f"""
-                <div class="card-output blue-grad">
-                    <p style="margin:0; opacity:0.8;">HPP PRODUK JADI </p>
-                    <h1 style="margin:0; font-size:50px;">{format_rp(h_jadi)}</h1>
-                </div>
-                <div class="card-output green-grad">
-                    <p style="margin:0; opacity:0.8;">HPP PRODUK DALAM PROSES (PDP)</p>
-                    <h1 style="margin:0; font-size:50px;">{format_rp(h_pdp)}</h1>
-                </div>
-                <div class="card-output yelow-grad">
-                    <p style="margin:0; opacity:0.8;">JUMLAH BIAYA PRODUKSI (TOTAL)</p>
-                    <h1 style="margin:0; font-size:50px;">{format_rp(h_jadi + h_pdp)}</h1>
-                </div>
-            """, unsafe_allow_html=True)
-            st.metric("Total Biaya Per Unit Produksi", format_rp(total_u))
-
-        with res_r:
-            st.markdown("#### 📏 Rincian Unit Ekuivalen")
-            for l, v in [("BBB", ue_bbb), ("BBP", ue_bbp), ("BTK", ue_btk), ("BOP", ue_bop)]:
-                st.markdown(f'<div class="ue-modern"><span>UE {l}</span><span class="ue-val">{v:,.1f}</span></div>', unsafe_allow_html=True)
-        
-        st.success("✅ Data berhasil disimpan! Buka menu 'Analisis Profitabilitas' untuk melihat laba.")
-
-# --- 3. HALAMAN ANALISIS PROFITABILITAS ---
-elif menu == "💰 Analisis Profitabilitas":
-    st.markdown("### 📈 Ikhtisar Harga Jual & Laba Rugi")
-    
-    if st.session_state.data_hpp['total_u'] == 0:
-        st.warning("⚠️ Harap lakukan 'Perhitungan HPP' terlebih dahulu sebelum mengakses halaman ini.")
-    else:
-        col_input1, col_input2 = st.columns([1, 2])
-        with col_input1:
-            st.markdown("#### 🏷️ Penetapan Harga")
-            harga_jual = st.number_input("Masukkan Harga Jual per Unit (Rp)", min_value=0, step=1000)
-        
-        total_u = st.session_state.data_hpp['total_u']
-        unit_jadi = st.session_state.data_hpp['unit_jadi']
-        
-        laba_per_unit = harga_jual - total_u
-        total_laba = laba_per_unit * unit_jadi
-        margin_pct = (laba_per_unit / harga_jual * 100) if harga_jual > 0 else 0
-        
-        st.divider()
-        c_res1, c_res2, c_res3 = st.columns(3)
-        with c_res1:
-            st.metric("Modal per Unit (HPP)", format_rp(total_u))
-        with c_res2:
-            st.metric("Laba/Rugi per Unit", format_rp(laba_per_unit), delta=f"{margin_pct:.1f}% Margin")
-        with c_res3:
-            st.metric("Total Laba Bersih", format_rp(total_laba))
-
-        st.markdown(f"""
-            <div class="card-output gold-grad">
-                <p style="margin:0; opacity:0.8; font-size:16px;">PROYEKSI TOTAL PENDAPATAN (REVENUE)</p>
-                <h1 style="margin:0; font-size:55px;">{format_rp(harga_jual * unit_jadi)}</h1>
-                <p style="margin-top:10px; font-size:14px;">Berdasarkan {unit_jadi} unit selesai</p>
-            </div>
-        """, unsafe_allow_html=True)
-        
-        if laba_per_unit < 0:
-            st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
-        elif laba_per_unit > 0:
-            st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+            
 
 
 

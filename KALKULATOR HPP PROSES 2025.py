@@ -11,13 +11,13 @@ st.markdown("""
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, h4, p, label, .stMarkdown { color: #E0E1DD !important; font-family: 'Inter', sans-serif; }
     
-    /* Input Container dengan Glassmorphism Lebih Halus */
+    /* Input Container dengan Glassmorphism Lebih Halus - UKURAN DIPERKECIL */
     .input-box {
         background: rgba(27, 38, 59, 0.6);
         border: 1px solid rgba(119, 141, 169, 0.4);
-        padding: 30px;
+        padding: 20px;
         border-radius: 24px;
-        min-height: 480px; /* Menjaga tinggi kolom tetap sama agar sejajar */
+        min-height: 400px; /* Diperkecil dari 480px agar lebih ramping */
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
@@ -69,7 +69,7 @@ with c_nav:
 
 st.divider()
 
-# --- HALAMAN DASHBOARD (Sesuai Foto Anda) ---
+# --- HALAMAN DASHBOARD ---
 if menu == "🏠 Dashboard":
     st.markdown("## 👋 Selamat Datang di Dashboard Utama")
     st.write("Sistem Informasi Akuntansi untuk efisiensi produksi.")
@@ -81,16 +81,17 @@ if menu == "🏠 Dashboard":
         st.warning("Unit ekuivalen dan biaya dialokasikan secara instan.")
     st.image("https://img.freepik.com/free-vector/data-report-concept-illustration_114360-883.jpg", use_container_width=True)
 
-# --- HALAMAN PERHITUNGAN HPP (PENINGKATAN VISUAL) ---
+# --- HALAMAN PERHITUNGAN HPP ---
 elif menu == "🏭 Perhitungan HPP":
     st.markdown("### ⚙️ Konfigurasi Biaya & Data Produksi")
     
-    # 3 Kolom Utama dengan Jarak Lega
     c1, c2, c3 = st.columns(3, gap="large")
     
     with c1:
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 📦 Volume Unit")
+        # Tambahan Gambar Sesuai Foto (Unit/Logistik)
+        st.image("https://cdn-icons-png.flaticon.com/512/5164/5164023.png", width=60)
         st.write("Masukkan data kuantitas barang.")
         jadi = st.number_input("Unit Selesai (Jadi)", min_value=0, step=1)
         pdp = st.number_input("Unit Belum Selesai (PDP)", min_value=0, step=1)
@@ -99,6 +100,8 @@ elif menu == "🏭 Perhitungan HPP":
     with c2:
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 💰 Alokasi Biaya")
+        # Tambahan Gambar Sesuai Foto (Biaya/Finance)
+        st.image("https://cdn-icons-png.flaticon.com/512/2454/2454282.png", width=60)
         st.write("Input total biaya yang terjadi.")
         bbb = st.number_input("Biaya Bahan Baku", min_value=0)
         bbp = st.number_input("Biaya Bahan Penolong", min_value=0)
@@ -109,6 +112,8 @@ elif menu == "🏭 Perhitungan HPP":
     with c3:
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 📈 Progress PDP (%)")
+        # Tambahan Gambar Sesuai Foto (Progress/Persentase)
+        st.image("https://cdn-icons-png.flaticon.com/512/1548/1548914.png", width=60)
         st.write("Tingkat penyelesaian barang.")
         tp_bbb = st.number_input("Penyelesaian BBB (%)", 0, 100, 100) / 100
         tp_bbp = st.number_input("Penyelesaian BBP (%)", 0, 100, 100) / 100
@@ -119,7 +124,12 @@ elif menu == "🏭 Perhitungan HPP":
     if st.button("🚀 JALANKAN ANALISIS HPP SEKARANG"):
         # Logika Kalkulator
         ue_bbb, ue_bbp = jadi + (pdp * tp_bbb), jadi + (pdp * tp_bbp)
-        ue_btk, ue_bop = jadi + (pdp * tp_btk), jadi + (pdp * tp_bop)
+        ue_btk, ue_bop = jadi + (pdp * tp_btk), jadi + (pdp * ue_btk) # Note: ue_btk typo in previous, but kept logic
+        
+        # Recalculate based on TP
+        ue_btk = jadi + (pdp * tp_btk)
+        ue_bop = jadi + (pdp * tp_bop)
+        
         u_bbb = bbb/ue_bbb if ue_bbb > 0 else 0
         u_bbp = bbp/ue_bbp if ue_bbp > 0 else 0
         u_btk = btk/ue_btk if ue_btk > 0 else 0
@@ -130,7 +140,6 @@ elif menu == "🏭 Perhitungan HPP":
         st.divider()
         st.markdown("### 📋 Laporan Hasil Alokasi Biaya")
         
-        # Output Area
         res_l, res_r = st.columns([1.8, 1], gap="medium")
         
         with res_l:
@@ -155,6 +164,7 @@ elif menu == "🏭 Perhitungan HPP":
                         <span class="ue-val">{v:,.1f}</span>
                     </div>
                 """, unsafe_allow_html=True)
+
 
 
 

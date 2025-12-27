@@ -1,4 +1,4 @@
-mport streamlit as st
+import streamlit as st
 
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="Kalkulator HPP Akuntansi", page_icon="📊", layout="wide")
@@ -160,6 +160,7 @@ elif menu == "🏭 Perhitungan HPP":
                         <span class="ue-val">{v:,.1f}</span>
                     </div>
                 """, unsafe_allow_html=True)
+
 
 
 

@@ -11,16 +11,6 @@ st.markdown("""
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, h4, p, label, .stMarkdown { color: #E0E1DD !important; font-family: 'Inter', sans-serif; }
     
-    /* Input Container DIPERKECIL min-height-nya agar lebih hemat ruang */
-    .input-box {
-        background: rgba(27, 38, 59, 0.6);
-        border: 1px solid rgba(119, 141, 169, 0.4);
-        padding: 20px;
-        border-radius: 24px;
-        min-height: 320px; /* Diperkecil dari 400px agar lebih ramping */
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
     /* Kartu Hasil Perhitungan (Output) */
     .card-output {
         padding: 35px;
@@ -160,6 +150,7 @@ elif menu == "🏭 Perhitungan HPP":
                         <span class="ue-val">{v:,.1f}</span>
                     </div>
                 """, unsafe_allow_html=True)
+
 
 
 

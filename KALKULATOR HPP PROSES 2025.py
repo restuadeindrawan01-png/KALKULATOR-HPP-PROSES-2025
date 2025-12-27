@@ -3,142 +3,137 @@ import streamlit as st
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="Kalkulator HPP Akuntansi", page_icon="📊", layout="wide")
 
-# --- STYLE CSS: THEME BIRU TUA & VISUALISASI MODERN ---
+# --- STYLE CSS UNTUK TAMPILAN MODERN & BERJARAK ---
 st.markdown("""
     <style>
-    /* Latar Belakang Biru Tua */
+    /* Latar belakang gelap elegan */
     .stApp { background-color: #0D1B2A !important; }
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, p, label, .stMarkdown { color: #E0E1DD !important; }
     
-    /* Styling Kartu Dashboard (Akurasi, Efisiensi, Laporan) */
+    /* Memberi jarak antar elemen input */
+    .stNumberInput { margin-bottom: 25px !important; }
+    
+    /* Styling Kartu Dashboard */
     .st-emotion-cache-p5mtre { 
         background-color: #1B263B !important; 
         border: 1px solid #415A77 !important; 
-        border-radius: 12px; 
+        border-radius: 15px;
+        margin-bottom: 20px;
     }
-    .card-content { padding: 15px; border-radius: 8px; color: #0D1B2A !important; font-weight: bold; }
-    .bg-blue { background-color: #A2D2FF; }
-    .bg-green { background-color: #B2D8B2; }
-    .bg-yellow { background-color: #E9EDC9; }
+    
+    /* Box Hasil Perhitungan dengan Bayangan */
+    .result-card {
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .bg-jadi { background: linear-gradient(135deg, #1d3557 0%, #457b9d 100%); }
+    .bg-pdp { background: linear-gradient(135deg, #344e41 0%, #588157 100%); }
 
-    /* Desain Vertikal Unit Ekuivalen */
-    .ue-box {
-        background: linear-gradient(135deg, #1B263B 0%, #0D1B2A 100%);
+    /* Unit Ekuivalen Vertikal Berjarak */
+    .ue-item {
+        background-color: #1B263B;
         padding: 15px;
-        border-left: 5px solid #778DA9;
-        margin-bottom: 12px;
-        border-radius: 8px;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        border-left: 6px solid #E0E1DD;
+        margin-bottom: 15px;
     }
-    .ue-label { font-size: 13px; color: #778DA9; text-transform: uppercase; letter-spacing: 1px; }
-    .ue-value { font-size: 22px; font-weight: bold; color: #FFFFFF; }
-
-    /* Input & Tombol */
-    .stNumberInput input { background-color: #FFFFFF !important; color: #0D1B2A !important; font-weight: bold; }
+    
+    /* Tombol Besar */
     .stButton>button { 
-        background-color: #415A77; color: white; border-radius: 8px; width: 100%; 
-        border: 1px solid #778DA9; font-weight: bold; height: 50px; transition: 0.3s;
+        background-color: #E0E1DD; color: #0D1B2A; border-radius: 10px; width: 100%; 
+        font-weight: bold; height: 60px; font-size: 18px; margin-top: 20px;
     }
-    .stButton>button:hover { background-color: #778DA9; border-color: #E0E1DD; }
     </style>
     """, unsafe_allow_html=True)
 
 def format_rp(angka):
     return f"Rp {int(angka):,}".replace(",", ".")
 
-# --- HEADER & NAVIGASI POJOK KANAN ATAS ---
+# --- NAVIGASI POJOK KANAN ---
 col_jdl, col_nav = st.columns([2, 1])
 with col_jdl:
     st.markdown("# 📊 SISTEM AKUNTANSI BIAYA")
 with col_nav:
-    menu = st.selectbox("Menu:", ["🏠 Dashboard", "🏭 Perhitungan HPP"], label_visibility="collapsed")
-    st.markdown('<p style="text-align:right; color:#778DA9; font-size:12px;">Navigasi Halaman</p>', unsafe_allow_html=True)
+    menu = st.selectbox("Pilih Menu:", ["🏠 Dashboard", "🏭 Hitung HPP"], label_visibility="collapsed")
 
 st.divider()
 
-# --- HALAMAN 1: DASHBOARD ---
 if menu == "🏠 Dashboard":
-    st.markdown("## 👋 Selamat Datang di Aplikasi Kalkulator HPP")
-    st.write("Klik untuk melihat penjelasan fitur utama:")
+    st.markdown("## 👋 Selamat Datang")
+    st.write("Sistem Informasi Akuntansi untuk efisiensi produksi.")
     
+    # Dashboard Berjarak
     with st.expander("🔵 Akurasi Data"):
-        st.markdown("<div class='card-content bg-blue'>Menjamin perhitungan HPP sesuai standar PSAK dengan metode rata-rata tertimbang.</div>", unsafe_allow_html=True)
+        st.info("Menjamin perhitungan HPP sesuai standar PSAK (Metode Rata-Rata).")
     with st.expander("🟢 Efisiensi Biaya"):
-        st.markdown("<div class='card-content bg-green'>Memantau alokasi biaya pada Produk Dalam Proses (PDP) secara mendetail.</div>", unsafe_allow_html=True)
+        st.success("Memantau penyerapan biaya pada setiap lini produksi (PDP Akhir).")
     with st.expander("🟡 Laporan Otomatis"):
-        st.markdown("<div class='card-content bg-yellow'>Unit ekuivalen dan alokasi biaya akhir dihitung secara instan.</div>", unsafe_allow_html=True)
+        st.warning("Laporan Unit Ekuivalen dan Alokasi Biaya dihasilkan secara instan.")
     
-    st.image("https://img.freepik.com/free-vector/accounting-concept-illustration_114360-1532.jpg", use_container_width=True)
+    st.image("https://img.freepik.com/free-vector/data-report-concept-illustration_114360-883.jpg", use_container_width=True)
 
-# --- HALAMAN 2: PERHITUNGAN HPP ---
-elif menu == "🏭 Perhitungan HPP":
-    st.markdown("### 📝 Input Data Produksi & Biaya")
+elif menu == "🏭 Hitung HPP":
+    st.markdown("### 📝 Input Data Produksi")
+    st.write("Isi data di bawah ini dengan teliti.")
     
-    col_input1, col_input2 = st.columns(2)
-    
-    with col_input1:
-        st.markdown("#### 1. Data Unit")
-        jadi = st.number_input("Unit Produk Jadi", min_value=0, step=1)
-        pdp = st.number_input("Unit PDP Akhir", min_value=0, step=1)
+    # Menggunakan Container untuk memberi jarak visual
+    with st.container():
+        c1, spacer, c2 = st.columns([1, 0.2, 1]) # Menambahkan 'spacer' di tengah
         
-        st.markdown("#### 2. Total Biaya Produksi")
-        c_bbb = st.number_input("Biaya Bahan Baku (BBB)", min_value=0, step=1000)
-        c_bbp = st.number_input("Biaya Bahan Penolong (BBP)", min_value=0, step=1000)
-        c_btk = st.number_input("Biaya Tenaga Kerja (BTKL)", min_value=0, step=1000)
-        c_bop = st.number_input("Biaya Overhead (BOP)", min_value=0, step=1000)
+        with c1:
+            st.markdown("#### 📦 Data Unit")
+            jadi = st.number_input("Jumlah Unit Produk Jadi", min_value=0, step=1)
+            pdp = st.number_input("Jumlah Unit PDP Akhir", min_value=0, step=1)
+            
+            st.markdown("---") # Garis pemisah antar bagian
+            st.markdown("#### 💰 Rincian Total Biaya")
+            bbb = st.number_input("Total Biaya Bahan Baku (BBB)", min_value=0)
+            bbp = st.number_input("Total Biaya Bahan Penolong (BBP)", min_value=0)
+            btk = st.number_input("Total Biaya Tenaga Kerja (BTKL)", min_value=0)
+            bop = st.number_input("Total Biaya Overhead (BOP)", min_value=0)
 
-    with col_input2:
-        st.markdown("#### 3. Tingkat Penyelesaian (%)")
-        tp_bbb = st.number_input("TP - Bahan Baku (%)", 0, 100, 100) / 100
-        tp_bbp = st.number_input("TP - Bahan Penolong (%)", 0, 100, 100) / 100
-        tp_btk = st.number_input("TP - Tenaga Kerja (%)", 0, 100, 50) / 100
-        tp_bop = st.number_input("TP - Overhead (%)", 0, 100, 50) / 100
-        st.info("💡 Masukkan persentase penyelesaian untuk PDP Akhir di atas.")
+        with c2:
+            st.markdown("#### ⚙️ Tingkat Penyelesaian (%)")
+            st.write("Masukkan persentase penyelesaian untuk PDP Akhir:")
+            tp_bbb = st.number_input("TP - Bahan Baku (%)", 0, 100, 100) / 100
+            tp_bbp = st.number_input("TP - Bahan Penolong (%)", 0, 100, 100) / 100
+            tp_btk = st.number_input("TP - Tenaga Kerja (%)", 0, 100, 50) / 100
+            tp_bop = st.number_input("TP - Overhead (%)", 0, 100, 50) / 100
+            
+            st.info("💡 Pastikan TP Tenaga Kerja dan Overhead sesuai dengan laporan produksi lapangan.")
 
-    if st.button("🚀 JALANKAN ANALISIS BIAYA LENGKAP"):
-        # Hitung Unit Ekuivalen (UE)
+    if st.button("🚀 HITUNG ALOKASI BIAYA SEKARANG"):
+        # Logika Perhitungan
         ue_bbb, ue_bbp = jadi + (pdp * tp_bbb), jadi + (pdp * tp_bbp)
         ue_btk, ue_bop = jadi + (pdp * tp_btk), jadi + (pdp * tp_bop)
         
-        # Biaya Per Unit
-        u_bbb = c_bbb / ue_bbb if ue_bbb > 0 else 0
-        u_bbp = c_bbp / ue_bbp if ue_bbp > 0 else 0
-        u_btk = c_btk / ue_btk if ue_btk > 0 else 0
-        u_bop = c_bop / ue_bop if ue_bop > 0 else 0
+        u_bbb = bbb/ue_bbb if ue_bbb>0 else 0
+        u_bbp = bbp/ue_bbp if ue_bbp>0 else 0
+        u_btk = btk/ue_btk if ue_btk>0 else 0
+        u_bop = bop/ue_bop if ue_bop>0 else 0
         total_u = u_bbb + u_bbp + u_btk + u_bop
         
-        # Alokasi Biaya Terpisah
-        tot_hpp_jadi = jadi * total_u
-        tot_hpp_pdp = (pdp*tp_bbb*u_bbb) + (pdp*tp_bbp*u_bbp) + (pdp*tp_btk*u_btk) + (pdp*tp_bop*u_bop)
+        h_jadi = jadi * total_u
+        h_pdp = (pdp*tp_bbb*u_bbb) + (pdp*tp_bbp*u_bbp) + (pdp*tp_btk*u_btk) + (pdp*tp_bop*u_bop)
 
-        st.divider()
+        st.markdown("### 📋 Laporan Hasil Analisis")
         
-        # TAMPILAN LAPORAN HASIL
-        st.markdown("### 📋 Laporan Hasil Analisis Biaya")
+        # Tampilan Hasil yang Sangat Berbeda & Menarik
+        res1, res2 = st.columns([1.5, 1])
         
-        col_res1, col_res2 = st.columns([1.5, 1])
-        
-        with col_res1:
-            st.success(f"*Total HPP Produk Jadi*\n## {format_rp(tot_hpp_jadi)}")
-            st.warning(f"*Total HPP PDP Akhir*\n## {format_rp(tot_hpp_pdp)}")
-            st.info(f"*Total Biaya Keseluruhan:* {format_rp(tot_hpp_jadi + tot_hpp_pdp)}")
-            st.metric("Total Biaya Per Unit", format_rp(total_u))
+        with res1:
+            st.markdown(f"""
+            <div class="result-card bg-jadi">
+                <p style="margin:0; font-size:16px;">TOTAL HPP PRODUK JADI</p>
+                <h2 style="margin:0; color:white;">{format_rp(h_jadi)}</h2>
+            </div>
+            <div class="result-card bg-pdp">
+                <p style="margin:0; font-size:16px;">TOTAL HPP PDP AKHIR</p>
 
-        with col_res2:
-            st.markdown("#### 📏 Unit Ekuivalen (Rincian)")
-            # Desain Vertikal
-            for lab, val in [("Bahan Baku", ue_bbb), ("Bahan Penolong", ue_bbp), ("Tenaga Kerja", ue_btk), ("Overhead", ue_bop)]:
-                st.markdown(f"""
-                <div class="ue-box">
-                    <div class="ue-label">UE {lab}</div>
-                    <div class="ue-value">{val:,.1f} Unit</div>
-                </div>
-                """, unsafe_allow_html=True)
-
-        with st.expander("📚 Lihat Rumus Akuntansi"):
-            st.latex(r"UE = \text{Jadi} + (\text{PDP} \times \text{TP}\%)")
-            st.latex(r"\text{Biaya/Unit} = \frac{\text{Total Biaya}}{\text{UE}}")
 
 
 

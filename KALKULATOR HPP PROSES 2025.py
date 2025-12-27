@@ -20,9 +20,11 @@ st.markdown("""
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, h4, p, label, .stMarkdown { color: #E0E1DD !important; font-family: 'Inter', sans-serif; }
 
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
+    /* --- SEMBUNYIKAN ATRIBUT STREAMLIT --- */
+    #MainMenu {visibility: hidden;} /* Menu Hamburger */
+    header {visibility: hidden;}    /* Header */
+    footer {visibility: hidden;}    /* Footer */
+    .stDeployButton {display:none;} /* Tombol Deploy */
         
     .card-output {
         padding: 35px;
@@ -218,6 +220,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

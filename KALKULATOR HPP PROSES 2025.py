@@ -72,7 +72,7 @@ if menu == "🏠 Dashboard":
         Tenaga Kerja (BTK), hingga Overhead (BOP). Dengan mengetahui biaya per unit secara detail, 
         perusahaan dapat melakukan efisiensi pada pos biaya yang membengkak.""")
     with st.expander("🟡 Laporan Otomatis"):
-        st.warning("""**Kecepatan Analisis:* Membantu mempermudah dan mempersingkat, dari perhitungan manual yang rumit. Cukup masukkan data produksi 
+        st.warning("""**Kecepatan Analisis:**Membantu mempermudah dan mempersingkat, dari perhitungan manual yang rumit. Cukup masukkan data produksi 
         dan persentase penyelesaian, sistem akan menyajikan laporan HPP dan nilai persediaan PDP 
         secara instan dalam hitungan detik.""")
     
@@ -159,6 +159,7 @@ elif menu == "🏭 Perhitungan HPP":
                         <span class="ue-val">{v:,.1f}</span>
                     </div>
                 """, unsafe_allow_html=True)
+
 
 
 

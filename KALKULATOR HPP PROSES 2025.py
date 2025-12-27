@@ -24,8 +24,7 @@ st.markdown("""
     #MainMenu {visibility: hidden;} /* Menu Hamburger */
     header {visibility: hidden;}    /* Header */
     footer {visibility: hidden;}    /* Footer */
-    .stDeployButton {display:none;} /* Tombol Deploy */
-        
+  
     .card-output {
         padding: 35px;
         border-radius: 20px;
@@ -220,6 +219,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

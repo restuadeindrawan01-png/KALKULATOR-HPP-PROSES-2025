@@ -10,6 +10,12 @@ st.markdown("""
     .stApp { background-color: #0D1B2A !important; }
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, h4, p, label, .stMarkdown { color: #E0E1DD !important; font-family: 'Inter', sans-serif; }
+
+    /* MENYEMBUNYIKAN BRANDING STREAMLIT */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+    .stDeployButton {display:none;} /* Menyembunyikan tombol 'Deploy' */
     
     /* Kartu Hasil Perhitungan (Output) */
     .card-output {
@@ -158,6 +164,7 @@ elif menu == "🏭 Perhitungan HPP":
                         <span class="ue-val">{v:,.1f}</span>
                     </div>
                 """, unsafe_allow_html=True)
+
 
 
 

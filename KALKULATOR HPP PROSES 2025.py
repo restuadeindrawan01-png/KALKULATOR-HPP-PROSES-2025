@@ -146,7 +146,79 @@ elif menu == "🏭 Perhitungan HPP":
             'total_u': total_u, 
             'h_jadi': h_jadi, 
             'h_pdp': h_pdp, 
-            
+            'unit_jadi': jadi
+        }
+
+        st.divider()
+        st.markdown("### 📋 Hasil Perhitungan HPP")
+        res_l, res_r = st.columns([1.8, 1], gap="medium")
+        
+        with res_l:
+            st.markdown(f"""
+                <div class="card-output blue-grad">
+                    <p style="margin:0; opacity:0.8;">HPP PRODUK JADI </p>
+                    <h1 style="margin:0; font-size:50px;">{format_rp(h_jadi)}</h1>
+                </div>
+                <div class="card-output green-grad">
+                    <p style="margin:0; opacity:0.8;">HPP PRODUK DALAM PROSES (PDP)</p>
+                    <h1 style="margin:0; font-size:50px;">{format_rp(h_pdp)}</h1>
+                </div>
+                <div class="card-output yelow-grad">
+                    <p style="margin:0; opacity:0.8;">JUMLAH BIAYA PRODUKSI (TOTAL)</p>
+                    <h1 style="margin:0; font-size:50px;">{format_rp(h_jadi + h_pdp)}</h1>
+                </div>
+            """, unsafe_allow_html=True)
+            st.metric("Total Biaya Per Unit Produksi", format_rp(total_u))
+
+        with res_r:
+            st.markdown("#### 📏 Rincian Unit Ekuivalen")
+            for l, v in [("BBB", ue_bbb), ("BBP", ue_bbp), ("BTK", ue_btk), ("BOP", ue_bop)]:
+                st.markdown(f'<div class="ue-modern"><span>UE {l}</span><span class="ue-val">{v:,.1f}</span></div>', unsafe_allow_html=True)
+        
+        st.success("✅ Data berhasil disimpan! Buka menu 'Analisis Profitabilitas' untuk melihat laba.")
+
+# --- 3. HALAMAN ANALISIS PROFITABILITAS ---
+elif menu == "💰 Analisis Profitabilitas":
+    st.markdown("### 📈 Ikhtisar Harga Jual & Laba Rugi")
+    
+    if st.session_state.data_hpp['total_u'] == 0:
+        st.warning("⚠️ Harap lakukan 'Perhitungan HPP' terlebih dahulu sebelum mengakses halaman ini.")
+    else:
+        col_input1, col_input2 = st.columns([1, 2])
+        with col_input1:
+            st.markdown("#### 🏷️ Penetapan Harga")
+            harga_jual = st.number_input("Masukkan Harga Jual per Unit (Rp)", min_value=0, step=1000)
+        
+        total_u = st.session_state.data_hpp['total_u']
+        unit_jadi = st.session_state.data_hpp['unit_jadi']
+        
+        laba_per_unit = harga_jual - total_u
+        total_laba = laba_per_unit * unit_jadi
+        margin_pct = (laba_per_unit / harga_jual * 100) if harga_jual > 0 else 0
+        
+        st.divider()
+        c_res1, c_res2, c_res3 = st.columns(3)
+        with c_res1:
+            st.metric("Modal per Unit (HPP)", format_rp(total_u))
+        with c_res2:
+            st.metric("Laba/Rugi per Unit", format_rp(laba_per_unit), delta=f"{margin_pct:.1f}% Margin")
+        with c_res3:
+            st.metric("Total Laba Bersih", format_rp(total_laba))
+
+        st.markdown(f"""
+            <div class="card-output gold-grad">
+                <p style="margin:0; opacity:0.8; font-size:16px;">PROYEKSI TOTAL PENDAPATAN (REVENUE)</p>
+                <h1 style="margin:0; font-size:55px;">{format_rp(harga_jual * unit_jadi)}</h1>
+                <p style="margin-top:10px; font-size:14px;">Berdasarkan {unit_jadi} unit selesai</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        if harga_jual > 0:
+            if laba_per_unit < 0:
+                st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
+            elif laba_per_unit > 0:
+                st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

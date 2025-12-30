@@ -314,7 +314,8 @@ elif menu == "💰 Analisis Profitabilitas":
 
         # --- 6. BAGIAN EDUKASI (Diletakkan di Bawah) ---
 st.write("---")
-with st.expander("💡 Mengapa saya tidak boleh menggunakan titik (.) saat mengetik ribuan?"):
+with st.expander("🚨 PERINGATAN: tidak boleh menggunakan, menambah titik (.) saat mengetik ribuan!"):
+    st.error("⚠️ *MENGAPA?: Karena jika anda melakukan INPUT '1.000' maka hanya akan dibaca '1'*")
     st.info("""
     Sistem kami menggunakan standar pemrograman internasional:
     1. *Titik (.)* dianggap sebagai pemisah DESIMAL (Contoh: 1.5 berarti satu setengah).
@@ -322,6 +323,7 @@ with st.expander("💡 Mengapa saya tidak boleh menggunakan titik (.) saat menge
     3. *Akibatnya:* Seluruh laporan HPP dan Laba Rugi Anda akan menjadi salah total karena biaya yang terinput jauh lebih kecil dari seharusnya.
     4. Selalu masukkan angka secara *Polos* (Contoh: 1000000).
     """)
+
 
 
 

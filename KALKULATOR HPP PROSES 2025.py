@@ -185,24 +185,24 @@ elif menu == "🏭 Perhitungan HPP":
         
         with st.expander("🔍 Lihat Rincian Langkah-Langkah"):
             st.markdown("#### 1. Unit Ekuivalen (UE)")
-            st.write(f"BBB: {jadi} + ({pdp} * {int(tp_bbb*100)}%) = *{format_bersih(ue_bbb)}*")
-            st.write(f"BBP: {jadi} + ({pdp} * {int(tp_bbp*100)}%) = *{format_bersih(ue_bbp)}*")
-            st.write(f"BTK: {jadi} + ({pdp} * {int(tp_btk*100)}%) = *{format_bersih(ue_btk)}*")
-            st.write(f"BOP: {jadi} + ({pdp} * {int(tp_bop*100)}%) = *{format_bersih(ue_bop)}*")
+            st.write(f"BBB: {jadi} + ({pdp} * {int(tp_bbb*100)}%) = *{format_angka(ue_bbb)}*")
+            st.write(f"BBP: {jadi} + ({pdp} * {int(tp_bbp*100)}%) = *{format_angka(ue_bbp)}*")
+            st.write(f"BTK: {jadi} + ({pdp} * {int(tp_btk*100)}%) = *{format_angka(ue_btk)}*")
+            st.write(f"BOP: {jadi} + ({pdp} * {int(tp_bop*100)}%) = *{format_angka(ue_bop)}*")
                         
             st.markdown("#### 2. Biaya Per Unit")
-            st.write(f"BBB: {format_bersih(bbb)} / {format_bersih(ue_bbb)} = *Rp {format_bersih(u_bbb)}*")
-            st.write(f"BBP: {format_bersih(bbp)} / {format_bersih(ue_bbp)} = *Rp {format_bersih(u_bbp)}*")
-            st.write(f"BTK: {format_bersih(btk)} / {format_bersih(ue_btk)} = *Rp {format_bersih(u_btk)}*")
-            st.write(f"BOP: {format_bersih(bop)} / {format_bersih(ue_bop)} = *Rp {format_bersih(u_bop)}*")
-            st.write(f"*Total Biaya Per Unit: Rp {format_bersih(total_u)}*")
+            st.write(f"BBB: {format_rp(bbb)} / {format_angka(ue_bbb)} = *Rp {format_rp(u_bbb)}*")
+            st.write(f"BBP: {format_rp(bbp)} / {format_angka(ue_bbp)} = *Rp {format_rp(u_bbp)}*")
+            st.write(f"BTK: {format_rp(btk)} / {format_angka(ue_btk)} = *Rp {format_rp(u_btk)}*")
+            st.write(f"BOP: {format_rp(bop)} / {format_angka(ue_bop)} = *Rp {format_rp(u_bop)}*")
+            st.write(f"*Total Biaya Per Unit: Rp {format_rp(total_u)}*")
             
             st.markdown("#### 3. Alokasi ke PDP")
-            st.write(f"BBB: {pdp} * {int(tp_bbb*100)}% * Rp {format_bersih(u_bbb)} = *Rp {format_bersih(pdp*tp_bbb*u_bbb)}*")
-            st.write(f"BBP: {pdp} * {int(tp_bbp*100)}% * Rp {format_bersih(u_bbp)} = *Rp {format_bersih(pdp*tp_bbp*u_bbp)}*")
-            st.write(f"BTK: {pdp} * {int(tp_btk*100)}% * Rp {format_bersih(u_btk)} = *Rp {format_bersih(pdp*tp_btk*u_btk)}*")
-            st.write(f"BOP: {pdp} * {int(tp_bop*100)}% * Rp {format_bersih(u_bop)} = *Rp {format_bersih(pdp*tp_bop*u_bop)}*")
-            st.write(f"*Total Nilai PDP: Rp {format_bersih(h_pdp)}*")
+            st.write(f"BBB: {pdp} * {int(tp_bbb*100)}% * Rp {format_rp(u_bbb)} = *Rp {format_rp(pdp*tp_bbb*u_bbb)}*")
+            st.write(f"BBP: {pdp} * {int(tp_bbp*100)}% * Rp {format_rp(u_bbp)} = *Rp {format_rp(pdp*tp_bbp*u_bbp)}*")
+            st.write(f"BTK: {pdp} * {int(tp_btk*100)}% * Rp {format_rp(u_btk)} = *Rp {format_rp(pdp*tp_btk*u_btk)}*")
+            st.write(f"BOP: {pdp} * {int(tp_bop*100)}% * Rp {format_rp(u_bop)} = *Rp {format_rp(pdp*tp_bop*u_bop)}*")
+            st.write(f"*Total Nilai PDP: Rp {format_rp(h_pdp)}*")
                      
         st.success("✅ Data berhasil disimpan! Buka menu 'Analisis Profitabilitas' untuk melihat laba.")
 
@@ -263,6 +263,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

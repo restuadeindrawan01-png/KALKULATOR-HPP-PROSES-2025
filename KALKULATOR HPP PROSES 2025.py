@@ -60,9 +60,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- FUNGSI FORMATTING (SOLUSI KESALAHAN) ---
-def format_bersih(angka):
-    """Menghilangkan .0 dan memberi titik pemisah ribuan"""
-    return f"{int(angka):,}".replace(",", ".")
+def fmt_angka(angka):
+    """Menghilangkan .0 dan memberi titik pemisah ribuan. Jika ada desimal penting, tampilkan 2 angka."""
+    if angka % 1 == 0:
+        return f"{int(angka):,}".replace(",", ".")
+    return f"{angka:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
     
 def format_rp(angka):
     return f"Rp {int(angka):,}".replace(",", ".")
@@ -228,22 +230,9 @@ elif menu == "💰 Analisis Profitabilitas":
         # --- PERBAIKAN INDENTASI PADA BAGIAN METRIC ---
         st.divider()
         c_res1, c_res2, c_res3 = st.columns(3)
-        
-        with c_res1:
-            # Menampilkan modal dengan detail 4 desimal
-            st.metric("Modal per Unit (HPP)", f"Rp {total_u:,.4f}".replace(",", "X").replace(".", ",").replace("X", "."))
-
-        with c_res2:
-            # Menampilkan persentase desimal lebih panjang (4 angka di belakang koma)
-            st.metric(
-                "Laba/Rugi per Unit", 
-                f"Rp {laba_per_unit:,.4f}".replace(",", "X").replace(".", ",").replace("X", "."), 
-                delta=f"{margin_pct:.4f}% Margin"
-            )
-
-        with c_res3:
-            # Menampilkan Total Laba Bersih dengan detail desimal
-            st.metric("Total Laba Bersih", f"Rp {total_laba:,.4f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        c_res1.metric("Modal per Unit (HPP)", fmt_rp(total_u))
+        c_res2.metric("Laba/Rugi per Unit", fmt_rp(laba_per_unit), delta=f"{margin_pct:.2f}% Margin")
+        c_res3.metric("Total Laba Bersih", fmt_rp(total_laba))
         
         st.markdown(f"""
             <div class="card-output gold-grad">
@@ -274,6 +263,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

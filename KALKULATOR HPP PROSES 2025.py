@@ -60,7 +60,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- FUNGSI FORMATTING (SOLUSI KESALAHAN) ---
-def fmt_angka(angka):
+def format_angka(angka):
     """Menghilangkan .0 dan memberi titik pemisah ribuan. Jika ada desimal penting, tampilkan 2 angka."""
     if angka % 1 == 0:
         return f"{int(angka):,}".replace(",", ".")
@@ -195,14 +195,14 @@ elif menu == "🏭 Perhitungan HPP":
             st.write(f"BBP: {format_rp(bbp)} / {format_angka(ue_bbp)} = *Rp {format_rp(u_bbp)}*")
             st.write(f"BTK: {format_rp(btk)} / {format_angka(ue_btk)} = *Rp {format_rp(u_btk)}*")
             st.write(f"BOP: {format_rp(bop)} / {format_angka(ue_bop)} = *Rp {format_rp(u_bop)}*")
-            st.write(f"*Total Biaya Per Unit: Rp {format_rp(total_u)}*")
+            st.write(f"*Total Biaya Per Unit: {format_rp(total_u)}*")
             
             st.markdown("#### 3. Alokasi ke PDP")
             st.write(f"BBB: {pdp} * {int(tp_bbb*100)}% * Rp {format_rp(u_bbb)} = *Rp {format_rp(pdp*tp_bbb*u_bbb)}*")
             st.write(f"BBP: {pdp} * {int(tp_bbp*100)}% * Rp {format_rp(u_bbp)} = *Rp {format_rp(pdp*tp_bbp*u_bbp)}*")
             st.write(f"BTK: {pdp} * {int(tp_btk*100)}% * Rp {format_rp(u_btk)} = *Rp {format_rp(pdp*tp_btk*u_btk)}*")
             st.write(f"BOP: {pdp} * {int(tp_bop*100)}% * Rp {format_rp(u_bop)} = *Rp {format_rp(pdp*tp_bop*u_bop)}*")
-            st.write(f"*Total Nilai PDP: Rp {format_rp(h_pdp)}*")
+            st.write(f"*Total Nilai PDP: {format_rp(h_pdp)}*")
                      
         st.success("✅ Data berhasil disimpan! Buka menu 'Analisis Profitabilitas' untuk melihat laba.")
 
@@ -253,16 +253,17 @@ elif menu == "💰 Analisis Profitabilitas":
             st.write(f"(Laba per Unit ({format_rp(laba_per_unit)}) / Harga Jual ({format_rp(harga_jual)})) * 100% = *{margin_pct:.2f}%*")
             
             st.markdown("*3. Total Pendapatan (Revenue)*")
-            st.write(f"Harga Jual ({format_rp(harga_jual)}) * Jumlah Unit Jadi ({format_bersih(unit_jadi)}) = *{format_rp(revenue)}*")
+            st.write(f"Harga Jual ({format_rp(harga_jual)}) * Jumlah Unit Jadi ({format_angka(unit_jadi)}) = *{format_rp(revenue)}*")
             
             st.markdown("*4. Total Laba Bersih*")
-            st.write(f"Laba per Unit ({format_rp(laba_per_unit)}) * Jumlah Unit Jadi ({format_bersih(unit_jadi)}) = *{format_rp(total_laba)}*")
+            st.write(f"Laba per Unit ({format_rp(laba_per_unit)}) * Jumlah Unit Jadi ({format_angka(unit_jadi)}) = *{format_rp(total_laba)}*")
             
         if harga_jual > 0:
             if laba_per_unit < 0:
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

@@ -176,6 +176,27 @@ elif menu == "🏭 Perhitungan HPP":
             for l, v in [("BBB", ue_bbb), ("BBP", ue_bbp), ("BTK", ue_btk), ("BOP", ue_bop)]:
                 st.markdown(f'<div class="ue-modern"><span>UE {l}</span><span class="ue-val">{v:,.1f}</span></div>', unsafe_allow_html=True)
         
+        # --- TAMBAHAN RINCIAN PERHITUNGAN HPP (STEP-BY-STEP) ---
+        with st.expander("🔍 Lihat Rincian Langkah-Langkah Perhitungan"):
+            st.markdown("#### 1. Unit Ekuivalen (UE)")
+            st.write(f"BBB: {jadi} + ({pdp} * {tp_bbb*100}%) = {ue_bbb}")
+            st.write(f"BBP: {jadi} + ({pdp} * {tp_bbp*100}%) = {ue_bbp}")
+            st.write(f"BTK: {jadi} + ({pdp} * {tp_btk*100}%) = {ue_btk}")
+            st.write(f"BOP: {jadi} + ({pdp} * {tp_bop*100}%) = {ue_bop}")
+            
+            st.markdown("#### 2. Biaya Per Unit")
+            st.write(f"BBB: {bbb} / {ue_bbb} = Rp {u_bbb:,.2f}")
+            st.write(f"BBP: {bbp} / {ue_bbp} = Rp {u_bbp:,.2f}")
+            st.write(f"BTK: {btk} / {ue_btk} = Rp {u_btk:,.2f}")
+            st.write(f"BOP: {bop} / {ue_bop} = Rp {u_bop:,.2f}")
+            st.write(f"*Total Biaya per Unit: Rp {total_u:,.4f}*")
+
+            st.markdown("#### 3. Alokasi ke PDP")
+            st.write(f"BBB: {pdp} * {tp_bbb*100}% * Rp {u_bbb:,.2f} = Rp {pdp*tp_bbb*u_bbb:,.2f}")
+            st.write(f"BBP: {pdp} * {tp_bbp*100}% * Rp {u_bbp:,.2f} = Rp {pdp*tp_bbp*u_bbp:,.2f}")
+            st.write(f"BTK: {pdp} * {tp_btk*100}% * Rp {u_btk:,.2f} = Rp {pdp*tp_btk*u_btk:,.2f}")
+            st.write(f"BOP: {pdp} * {tp_bop*100}% * Rp {u_bop:,.2f} = Rp {pdp*tp_bop*u_bop:,.2f}")
+                     
         st.success("✅ Data berhasil disimpan! Buka menu 'Analisis Profitabilitas' untuk melihat laba.")
 
 # --- 3. HALAMAN ANALISIS PROFITABILITAS ---
@@ -230,6 +251,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

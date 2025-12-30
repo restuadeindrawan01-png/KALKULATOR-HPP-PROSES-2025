@@ -87,6 +87,26 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# --- FUNGSI PERINGATAN PREMIUM ---
+def cek_input_titik(label, nilai):
+    """Memberikan peringatan visual jika terdeteksi input yang mencurigakan"""
+    if 0 < nilai < 100:
+        with st.container():
+            st.markdown(f"""
+                <div style="background-color: rgba(255, 75, 75, 0.1); 
+                            border-left: 5px solid #FF4B4B; 
+                            padding: 15px; 
+                            border-radius: 5px; 
+                            margin: 10px 0;">
+                    <strong style="color: #FF4B4B;">⚠️ POTENSI KESALAHAN INPUT!</strong><br>
+                    <span style="color: #E0E1DD; font-size: 14px;">
+                        Nilai pada <b>{label}</b> terdeteksi hanya <b>{nilai}</b>. 
+                        Apakah Anda menggunakan TITIK sebagai ribuan? <br>
+                        <i>Gunakan angka polos tanpa tanda baca (Contoh: 1500000).</i>
+                    </span>
+                </div>
+            """, unsafe_allow_html=True)
+            
 # --- FUNGSI FORMATTING (SOLUSI KESALAHAN) ---
 def format_angka(angka):
     """Menghilangkan .0 dan memberi titik pemisah ribuan. Jika ada desimal penting, tampilkan 2 angka."""
@@ -292,6 +312,16 @@ elif menu == "💰 Analisis Profitabilitas":
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
 
+        # --- 6. BAGIAN EDUKASI (Diletakkan di Bawah) ---
+st.write("---")
+with st.expander("💡 Mengapa saya tidak boleh menggunakan titik (.) saat mengetik ribuan?"):
+    st.info("""
+    Sistem kami menggunakan standar pemrograman internasional:
+    1. *Titik (.)* dianggap sebagai pemisah DESIMAL (Contoh: 1.5 berarti satu setengah).
+    2. Jika Anda mengetik *1.000.000, sistem hanya membaca angka sebelum titik pertama, yaitu **1*.
+    3. *Akibatnya:* Seluruh laporan HPP dan Laba Rugi Anda akan menjadi salah total karena biaya yang terinput jauh lebih kecil dari seharusnya.
+    4. Selalu masukkan angka secara *Polos* (Contoh: 1000000).
+    """)
 
 
 

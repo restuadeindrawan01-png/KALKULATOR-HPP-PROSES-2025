@@ -20,11 +20,12 @@ st.markdown("""
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, h4, p, label, .stMarkdown { color: #E0E1DD !important; font-family: 'Inter', sans-serif; }
 
-    /* --- CSS INPUT KOTAK PUTIH & TEKS HITAM --- */
+    /* --- MODIFIKASI KOTAK INPUT (PUTIH & TEKS HITAM) --- */
     div[data-baseweb="input"] {
-        background-color: white !important;
-        border-radius: 12px !important;
-        border: 1px solid #dcdde1;
+        background-color: #FFFFFF !important; /* Kotak Putih Bersih */
+        border-radius: 10px !important;
+        border: 1px solid #DCDDE1 !important;
+        height: 45px;
 
         }
     input {
@@ -279,6 +280,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

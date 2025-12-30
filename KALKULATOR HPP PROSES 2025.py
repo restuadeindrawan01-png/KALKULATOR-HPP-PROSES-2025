@@ -20,6 +20,22 @@ st.markdown("""
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, h4, p, label, .stMarkdown { color: #E0E1DD !important; font-family: 'Inter', sans-serif; }
 
+    /* --- CSS INPUT KOTAK PUTIH & TEKS HITAM --- */
+    div[data-baseweb="input"] {
+        background-color: white !important;
+        border-radius: 12px !important;
+        border: 1px solid #dcdde1;
+
+        }
+    input {
+        color: black !important;
+        font-weight: bold !important;
+    }
+    .stNumberInput label p {
+        color: #E0E1DD !important; /* Warna label tetap terang di bg gelap */
+        font-weight: bold;
+    }
+
     /* --- SEMBUNYIKAN ATRIBUT STREAMLIT --- */
     #MainMenu {visibility: hidden;} /* Menu Hamburger */
     header {visibility: hidden;}    /* Header */
@@ -105,7 +121,7 @@ if menu == "🏠 Dashboard":
             
 # --- HALAMAN PERHITUNGAN HPP ---
 elif menu == "🏭 Perhitungan HPP":
-    st.markdown("### ⚙️ Konfigurasi Biaya & Data Produksi")
+    st.markdown("### ⚙️ Konfigurasi Biaya & Input Data Produksi")
     c1, c2, c3 = st.columns(3, gap="large")
     
     with c1:
@@ -129,7 +145,7 @@ elif menu == "🏭 Perhitungan HPP":
     with c3:
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 📈 Progress PDP (%)")
-        st.image("https://img.icons8.com/isometric/512/positive-dynamic.png", width=80)
+        st.image("https://img.icons8.com/3d-fluency/94/bar-chart.png", width=60)
         tp_bbb = st.number_input("Penyelesaian BBB (%)", 0, 100, 100) / 100
         tp_bbp = st.number_input("Penyelesaian BBP (%)", 0, 100, 100) / 100
         tp_btk = st.number_input("Penyelesaian BTK (%)", 0, 100, 50) / 100
@@ -263,6 +279,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

@@ -230,9 +230,9 @@ elif menu == "💰 Analisis Profitabilitas":
         # --- PERBAIKAN INDENTASI PADA BAGIAN METRIC ---
         st.divider()
         c_res1, c_res2, c_res3 = st.columns(3)
-        c_res1.metric("Modal per Unit (HPP)", fmt_rp(total_u))
-        c_res2.metric("Laba/Rugi per Unit", fmt_rp(laba_per_unit), delta=f"{margin_pct:.2f}% Margin")
-        c_res3.metric("Total Laba Bersih", fmt_rp(total_laba))
+        c_res1.metric("Modal per Unit (HPP)", format_rp(total_u))
+        c_res2.metric("Laba/Rugi per Unit", format_rp(laba_per_unit), delta=f"{margin_pct:.2f}% Margin")
+        c_res3.metric("Total Laba Bersih", format_rp(total_laba))
         
         st.markdown(f"""
             <div class="card-output gold-grad">
@@ -263,6 +263,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

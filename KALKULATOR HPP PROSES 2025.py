@@ -197,15 +197,26 @@ elif menu == "💰 Analisis Profitabilitas":
         total_laba = laba_per_unit * unit_jadi
         margin_pct = (laba_per_unit / harga_jual * 100) if harga_jual > 0 else 0
         
+        # --- PERBAIKAN INDENTASI PADA BAGIAN METRIC ---
         st.divider()
         c_res1, c_res2, c_res3 = st.columns(3)
+        
         with c_res1:
-            st.metric("Modal per Unit (HPP)", format_rp(total_u))
-        with c_res2:
-            st.metric("Laba/Rugi per Unit", format_rp(laba_per_unit), delta=f"{margin_pct:.1f}% Margin")
-        with c_res3:
-            st.metric("Total Laba Bersih", format_rp(total_laba))
+            # Menampilkan modal dengan detail 4 desimal
+            st.metric("Modal per Unit (HPP)", f"Rp {total_u:,.4f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
+        with c_res2:
+            # Menampilkan persentase desimal lebih panjang (4 angka di belakang koma)
+            st.metric(
+                "Laba/Rugi per Unit", 
+                f"Rp {laba_per_unit:,.4f}".replace(",", "X").replace(".", ",").replace("X", "."), 
+                delta=f"{margin_pct:.4f}% Margin"
+            )
+
+        with c_res3:
+            # Menampilkan Total Laba Bersih dengan detail desimal
+            st.metric("Total Laba Bersih", f"Rp {total_laba:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        
         st.markdown(f"""
             <div class="card-output gold-grad">
                 <p style="margin:0; opacity:0.8; font-size:16px;">PROYEKSI TOTAL PENDAPATAN (REVENUE)</p>
@@ -219,6 +230,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

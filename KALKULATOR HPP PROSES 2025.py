@@ -181,7 +181,7 @@ elif menu == "🏭 Perhitungan HPP":
         with res_r:
             st.markdown("#### 📏 Unit Ekuivalen")
             for l, v in [("BBB", ue_bbb), ("BBP", ue_bbp), ("BTK", ue_btk), ("BOP", ue_bop)]:
-                st.markdown(f'<div class="ue-modern"><span>UE {l}</span><span class="ue-val">{format_bersih(v)}</span></div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="ue-modern"><span>UE {l}</span><span class="ue-val">{format_angka(v)}</span></div>', unsafe_allow_html=True)
         
         with st.expander("🔍 Lihat Rincian Langkah-Langkah"):
             st.markdown("#### 1. Unit Ekuivalen (UE)")
@@ -263,6 +263,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

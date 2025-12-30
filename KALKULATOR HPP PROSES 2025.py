@@ -187,8 +187,7 @@ elif menu == "🏭 Perhitungan HPP":
             st.write(f"BBP: {jadi} + ({pdp} * {int(tp_bbp*100)}%) = *{format_bersih(ue_bbp)}*")
             st.write(f"BTK: {jadi} + ({pdp} * {int(tp_btk*100)}%) = *{format_bersih(ue_btk)}*")
             st.write(f"BOP: {jadi} + ({pdp} * {int(tp_bop*100)}%) = *{format_bersih(ue_bop)}*")
-            st.write(f"*Total Unit Ekuivalen: {format_bersih(ue_bbb + ue_bbp + ue_btk + ue_bop)}*")
-            
+                        
             st.markdown("#### 2. Biaya Per Unit")
             st.write(f"BBB: {format_bersih(bbb)} / {format_bersih(ue_bbb)} = *Rp {format_bersih(u_bbb)}*")
             st.write(f"BBP: {format_bersih(bbp)} / {format_bersih(ue_bbp)} = *Rp {format_bersih(u_bbp)}*")
@@ -219,7 +218,9 @@ elif menu == "💰 Analisis Profitabilitas":
         
         total_u = st.session_state.data_hpp['total_u']
         unit_jadi = st.session_state.data_hpp['unit_jadi']
-        
+
+        # --- PERBAIKAN: Definisi variabel revenue agar tidak Error ---
+        revenue = harga_jual * unit_jadi
         laba_per_unit = harga_jual - total_u
         total_laba = laba_per_unit * unit_jadi
         margin_pct = (laba_per_unit / harga_jual * 100) if harga_jual > 0 else 0
@@ -242,7 +243,7 @@ elif menu == "💰 Analisis Profitabilitas":
 
         with c_res3:
             # Menampilkan Total Laba Bersih dengan detail desimal
-            st.metric("Total Laba Bersih", f"Rp {total_laba:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+            st.metric("Total Laba Bersih", f"Rp {total_laba:,.4f}".replace(",", "X").replace(".", ",").replace("X", "."))
         
         st.markdown(f"""
             <div class="card-output gold-grad">
@@ -273,6 +274,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

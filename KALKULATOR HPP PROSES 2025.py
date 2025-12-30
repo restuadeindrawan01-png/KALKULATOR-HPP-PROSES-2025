@@ -130,7 +130,7 @@ st.divider()
 # --- HALAMAN DASHBOARD ---
 if menu == "🏠 Dashboard":
     st.markdown("## 👋 Selamat Datang di Dashboard Utama")
-    st.write("Sistem Informasi Akuntansi Biaya membantu anda dalam melakukan Perhitungan Harga Pokok produksi secara otomatis.")
+    st.write("Sistem Informasi Akuntansi Biaya akan membantu anda dalam melakukan Perhitungan Harga Pokok produksi(proses) secara otomatis.")
     
     # KOREKSI: Memperbaiki string literal dan indentasi expander
     with st.expander("🔵 Akurasi Data"):
@@ -314,15 +314,26 @@ elif menu == "💰 Analisis Profitabilitas":
 
         # --- 6. BAGIAN EDUKASI (Diletakkan di Bawah) ---
 st.write("---")
-with st.expander("🚨 PERINGATAN: tidak boleh menggunakan, menambah titik (.) saat mengetik ribuan!"):
-    st.error("⚠️ *MENGAPA?: Karena jika anda melakukan INPUT '1.000' maka hanya akan dibaca '1'*")
+with st.expander("🚨 PERINGATAN: Tidak boleh menggunakan atau menambah titik (.) saat mengetik ribuan!!!"):
+    st.error("⚠️ *MENGAPA?: Karena jika Anda melakukan INPUT *'1.000'*, maka hanya akan terbaca oleh sistem *'1'**.")
     st.info("""
+    ### 🖥️ Penjelasan Teknis
     Sistem kami menggunakan standar pemrograman internasional:
-    1. *Titik (.)* dianggap sebagai pemisah DESIMAL (Contoh: 1.5 berarti satu setengah).
+    1. *Titik (.)* dianggap sebagai pemisah *DESIMAL* (Contoh: 1.5 berarti satu setengah).
     2. Jika Anda mengetik *1.000.000, sistem hanya membaca angka sebelum titik pertama, yaitu **1*.
-    3. *Akibatnya:* Seluruh laporan HPP dan Laba Rugi Anda akan menjadi salah total karena biaya yang terinput jauh lebih kecil dari seharusnya.
-    4. Selalu masukkan angka secara *Polos* (Contoh: 1000000).
+    3. *Akibatnya:* Seluruh laporan HPP dan Laba Rugi Anda akan menjadi *SALAH TOTAL* karena biaya yang terinput jauh lebih kecil dari seharusnya.
     """)
+    
+    st.success("""
+    ### ✅ Cara Input yang Benar:
+    1.  *Gunakan Angka Polos*: Masukkan angka tanpa tanda baca apa pun. 
+        * ❌ *SALAH*: 1.000.000 atau 1,000,000
+        * ✅ *BENAR*: 1000000
+    2.  *Lihat Format Otomatis: Setelah Anda selesai mengetik dan menekan 'Enter', sistem kami secara otomatis akan menampilkan format ribuan (Rp) pada bagian **Hasil Perhitungan* untuk memudahkan pembacaan Anda.
+    3.  *Cek Peringatan Merah*: Jika muncul kotak merah di bawah kolom input, segera hapus titik pada angka yang Anda masukkan.
+    """)
+    
+
 
 
 

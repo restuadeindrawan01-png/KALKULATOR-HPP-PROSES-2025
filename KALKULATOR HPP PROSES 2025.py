@@ -119,7 +119,7 @@ elif menu == "🏭 Perhitungan HPP":
     with c2:
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 💰 Alokasi Biaya")
-        st.image("https://cdn-icons-png.flaticon.com/512/2454/2454282.png", width=70)
+        st.image("https://cdn-icons-png.flaticon.com/512/2331/2331717.png", width=75)
         bbb = st.number_input("Biaya Bahan Baku", min_value=0)
         bbp = st.number_input("Biaya Bahan Penolong", min_value=0)
         btk = st.number_input("Biaya Tenaga Kerja", min_value=0)
@@ -129,7 +129,7 @@ elif menu == "🏭 Perhitungan HPP":
     with c3:
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 📈 Progress PDP (%)")
-        st.image("https://cdn-icons-png.flaticon.com/512/3222/3222672.png", width=70)
+        st.image("https://cdn-icons-png.flaticon.com/512/3222/3222760.png", width=75)
         tp_bbb = st.number_input("Penyelesaian BBB (%)", 0, 100, 100) / 100
         tp_bbp = st.number_input("Penyelesaian BBP (%)", 0, 100, 100) / 100
         tp_btk = st.number_input("Penyelesaian BTK (%)", 0, 100, 50) / 100
@@ -263,6 +263,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

@@ -59,6 +59,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# --- FUNGSI FORMATTING (SOLUSI KESALAHAN) ---
+def format_bersih(angka):
+    """Menghilangkan .0 dan memberi titik pemisah ribuan"""
+    return f"{int(angka):,}".replace(",", ".")
+    
 def format_rp(angka):
     return f"Rp {int(angka):,}".replace(",", ".")
 
@@ -75,7 +80,7 @@ st.divider()
 # --- HALAMAN DASHBOARD ---
 if menu == "🏠 Dashboard":
     st.markdown("## 👋 Selamat Datang di Dashboard Utama")
-    st.write("Sistem Informasi Akuntansi Biaya untuk efisiensi produksi.")
+    st.write("Sistem Informasi Akuntansi Biaya membantu anda dalam melakukan Perhitungan Harga Pokok produksi secara otomatis.")
     
     # KOREKSI: Memperbaiki string literal dan indentasi expander
     with st.expander("🔵 Akurasi Data"):
@@ -249,6 +254,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

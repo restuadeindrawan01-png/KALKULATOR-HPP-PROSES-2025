@@ -20,23 +20,32 @@ st.markdown("""
     [data-testid="stSidebar"] { display: none; }
     h1, h2, h3, h4, p, label, .stMarkdown { color: #E0E1DD !important; font-family: 'Inter', sans-serif; }
 
-   /* --- MODIFIKASI KOTAK INPUT (PUTIH & TEKS HITAM) --- */
-    div[data-baseweb="input"] {
-        background-color: #FFFFFF !important; /* Putih Bersih */
+   /* --- LOGIKA UTAMA: MEMAKSA KOTAK PUTIH PADA INPUT --- */
+    /* Target semua div input number */
+    div[data-baseweb="input"], div[data-baseweb="base-input"] {
+        background-color: #FFFFFF !important;
         border-radius: 10px !important;
         border: 1px solid #DCDDE1 !important;
-    }
-    
-    input {
-        color: black !important;
-        -webkit-text-fill-color: black !important; /* Memaksa teks hitam di browser tertentu */
-        font-weight: bold !important;
+        padding-right: 5px;
     }
 
-    /* Mengatur warna label teks di atas kotak input agar kontras dengan background gelap dashboard */
+    /* Target teks angka agar menjadi hitam pekat */
+    input[type="number"], input[type="text"] {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        font-weight: bold !important;
+        background-color: transparent !important;
+    }
+
+    /* Target tombol +/- agar terlihat di atas kotak putih */
+    button[aria-label="Step up"], button[aria-label="Step down"] {
+        color: #000000 !important;
+    }
+
+    /* Warna Label di atas input agar tetap kontras di bg gelap */
     .stNumberInput label p {
         color: #E0E1DD !important;
-        font-weight: bold;
+        font-weight: bold !important;
     }
 
     /* --- SEMBUNYIKAN ATRIBUT STREAMLIT --- */
@@ -282,6 +291,7 @@ elif menu == "💰 Analisis Profitabilitas":
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

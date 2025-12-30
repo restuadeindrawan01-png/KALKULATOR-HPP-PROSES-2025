@@ -187,7 +187,7 @@ elif menu == "🏭 Perhitungan HPP":
             st.write(f"BBP: {jadi} + ({pdp} * {int(tp_bbp*100)}%) = *{format_bersih(ue_bbp)}*")
             st.write(f"BTK: {jadi} + ({pdp} * {int(tp_btk*100)}%) = *{format_bersih(ue_btk)}*")
             st.write(f"BOP: {jadi} + ({pdp} * {int(tp_bop*100)}%) = *{format_bersih(ue_bop)}*")
-            st.write(f"*Total Kumulatif UE: {format_bersih(ue_bbb + ue_bbp + ue_btk + ue_bop)}*")
+            st.write(f"*Total Unit Ekuivalen: {format_bersih(ue_bbb + ue_bbp + ue_btk + ue_bop)}*")
             
             st.markdown("#### 2. Biaya Per Unit")
             st.write(f"BBB: {format_bersih(bbb)} / {format_bersih(ue_bbb)} = *Rp {format_bersih(u_bbb)}*")
@@ -251,12 +251,29 @@ elif menu == "💰 Analisis Profitabilitas":
                 <p style="margin-top:10px; font-size:14px;">Berdasarkan {unit_jadi} unit selesai</p>
             </div>
         """, unsafe_allow_html=True)
-        
+
+        # SEKSI BARU: PERINCIAN PERHITUNGAN
+        with st.expander("📑 Lihat Perincian Perhitungan Profitabilitas"):
+            st.markdown("#### 🧮 Rumus & Langkah Perhitungan")
+            
+            st.markdown("*1. Laba/Rugi per Unit*")
+            st.write(f"Harga Jual ({format_rp(harga_jual)}) - Modal per Unit ({format_rp(total_u)}) = *{format_rp(laba_per_unit)}*")
+            
+            st.markdown("*2. Margin Keuntungan (%)*")
+            st.write(f"(Laba per Unit ({format_rp(laba_per_unit)}) / Harga Jual ({format_rp(harga_jual)})) * 100% = *{margin_pct:.2f}%*")
+            
+            st.markdown("*3. Total Pendapatan (Revenue)*")
+            st.write(f"Harga Jual ({format_rp(harga_jual)}) * Jumlah Unit Jadi ({format_bersih(unit_jadi)}) = *{format_rp(revenue)}*")
+            
+            st.markdown("*4. Total Laba Bersih*")
+            st.write(f"Laba per Unit ({format_rp(laba_per_unit)}) * Jumlah Unit Jadi ({format_bersih(unit_jadi)}) = *{format_rp(total_laba)}*")
+            
         if harga_jual > 0:
             if laba_per_unit < 0:
                 st.error("🚨 PERINGATAN: Harga jual berada di bawah biaya produksi (RUGI).")
             elif laba_per_unit > 0:
                 st.success(f"✅ Strategi harga aman. Anda mendapatkan margin sebesar {format_rp(laba_per_unit)} per produk.")
+
 
 
 

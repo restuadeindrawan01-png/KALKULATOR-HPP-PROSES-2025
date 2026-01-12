@@ -225,7 +225,7 @@ elif menu == "🏭 Perhitungan HPP":
          # Simpan ke Session State
         st.session_state.data_hpp = {
             'total_u': total_u, 'h_jadi': h_jadi, 'h_pdp': h_pdp, 'unit_jadi': jadi,
-            'bbb': bbb, 'bbp': bbp, 'btk': btk, 'bop': bop_in
+            'bbb': bbb, 'bbp': bbp, 'btk': btk, 'bop': bop_total
         }
 
         st.divider()
@@ -362,6 +362,7 @@ with st.expander("🚨 PERINGATAN: Tidak boleh menggunakan atau menambah titik (
     3.  *Cek Peringatan Merah*: Jika muncul kotak merah di bawah kolom input, segera hapus titik pada angka yang Anda masukkan.
     """)
     
+
 
 
 

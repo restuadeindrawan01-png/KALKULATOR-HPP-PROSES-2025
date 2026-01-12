@@ -174,30 +174,35 @@ elif menu == "🏭 Perhitungan HPP":
         bbp = st.number_input("Biaya Bahan Penolong (BBP)", min_value=0)
         btk = st.number_input("Biaya Tenaga Kerja (BTK)", min_value=0)
         
-        st.divider()
+       st.divider()
         st.markdown("##### 🛠️ Rincian BOP")
         
-        # FITUR BARU: Penggolongan BOP
+        # Pilihan penggolongan BOP termasuk input total manual
         gol_bop = st.selectbox("Pilih Penggolongan BOP", 
                              ["Langsung Input Total", "Berdasarkan Sifat", "Berdasarkan Perilaku Biaya", "Berdasarkan Departemen"])
 
+        # Inisialisasi variabel bop agar tidak terjadi NameError
+        bop = 0.0
+
         if gol_bop == "Langsung Input Total":
-            bop = st.number_input("Masukkan Total Biaya Overhead Pabrik (BOP)", min_value=0)
+            bop = st.number_input("Masukkan Total Biaya Overhead Pabrik (BOP)", min_value=0.0, step=1000.0)
         elif gol_bop == "Berdasarkan Sifat":
-            bop_1 = st.number_input("Biaya Reparasi & Pemeliharaan", min_value=0)
-            bop_2 = st.number_input("Biaya Depresiasi Aktiva Tetap", min_value=0)
-            bop_3 = st.number_input("Biaya Listrik & Air Pabrik", min_value=0)
+            b1 = st.number_input("Biaya Reparasi & Pemeliharaan", min_value=0.0)
+            b2 = st.number_input("Biaya Depresiasi Aktiva Tetap", min_value=0.0)
+            b3 = st.number_input("Biaya Listrik & Air Pabrik", min_value=0.0)
+            bop = b1 + b2 + b3
         elif gol_bop == "Berdasarkan Perilaku Biaya":
-            bop_1 = st.number_input("BOP Variabel", min_value=0)
-            bop_2 = st.number_input("BOP Tetap", min_value=0)
-            bop_3 = st.number_input("BOP Semivariabel", min_value=0)
+            b1 = st.number_input("BOP Variabel", min_value=0.0)
+            b2 = st.number_input("BOP Tetap", min_value=0.0)
+            b3 = st.number_input("BOP Semivariabel", min_value=0.0)
+            bop = b1 + b2 + b3
         else:
-            bop_1 = st.number_input("BOP Langsung Departemen", min_value=0)
-            bop_2 = st.number_input("BOP Tidak Langsung Departemen", min_value=0)
-            bop_3 = st.number_input("BOP Jasa Pembantu", min_value=0)
-            
-        bop = bop_1 + bop_2 + bop_3 # Total BOP otomatis terjumlah
-        st.caption(f"**Total BOP Terhitung: {format_rp(bop)}**")
+            b1 = st.number_input("BOP Langsung Departemen", min_value=0.0)
+            b2 = st.number_input("BOP Tidak Langsung Departemen", min_value=0.0)
+            b3 = st.number_input("BOP Jasa Pembantu", min_value=0.0)
+            bop = b1 + b2 + b3
+
+        st.caption(f"*Total BOP Terhitung: {format_rp(bop)}*")
         st.markdown('</div>', unsafe_allow_html=True)
 
     with c3:
@@ -364,6 +369,7 @@ with st.expander("🚨 PERINGATAN: Tidak boleh menggunakan atau menambah titik (
     3.  *Cek Peringatan Merah*: Jika muncul kotak merah di bawah kolom input, segera hapus titik pada angka yang Anda masukkan.
     """)
     
+
 
 
 

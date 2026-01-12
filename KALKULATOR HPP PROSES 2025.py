@@ -1,5 +1,7 @@
 import streamlit as st
 import plotly.express as px
+import pandas as pd
+
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="Kalkulator HPP Akuntansi", page_icon="📊", layout="wide")
 
@@ -360,6 +362,7 @@ with st.expander("🚨 PERINGATAN: Tidak boleh menggunakan atau menambah titik (
     3.  *Cek Peringatan Merah*: Jika muncul kotak merah di bawah kolom input, segera hapus titik pada angka yang Anda masukkan.
     """)
     
+
 
 
 

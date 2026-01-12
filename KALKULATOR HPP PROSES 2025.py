@@ -179,9 +179,11 @@ elif menu == "🏭 Perhitungan HPP":
         
         # FITUR BARU: Penggolongan BOP
         gol_bop = st.selectbox("Pilih Penggolongan BOP", 
-                             ["Berdasarkan Sifat", "Berdasarkan Perilaku Biaya", "Berdasarkan Departemen"])
-        
-        if gol_bop == "Berdasarkan Sifat":
+                             ["Langsung Input Total, "Berdasarkan Sifat", "Berdasarkan Perilaku Biaya", "Berdasarkan Departemen"])
+
+        if gol_bop == "Langsung Input Total":
+            bop = st.number_input("Masukkan Total Biaya Overhead Pabrik (BOP)", min_value=0)
+        elif gol_bop == "Berdasarkan Sifat":
             bop_1 = st.number_input("Biaya Reparasi & Pemeliharaan", min_value=0)
             bop_2 = st.number_input("Biaya Depresiasi Aktiva Tetap", min_value=0)
             bop_3 = st.number_input("Biaya Listrik & Air Pabrik", min_value=0)
@@ -362,6 +364,7 @@ with st.expander("🚨 PERINGATAN: Tidak boleh menggunakan atau menambah titik (
     3.  *Cek Peringatan Merah*: Jika muncul kotak merah di bawah kolom input, segera hapus titik pada angka yang Anda masukkan.
     """)
     
+
 
 
 

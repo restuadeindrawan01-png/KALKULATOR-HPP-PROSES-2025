@@ -168,13 +168,35 @@ elif menu == "🏭 Perhitungan HPP":
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 💰 Alokasi Biaya")
         st.image("https://cdn-icons-png.flaticon.com/512/2331/2331717.png", width=75)
-        bbb = st.number_input("Biaya Bahan Baku", min_value=0)
-        bbp = st.number_input("Biaya Bahan Penolong", min_value=0)
-        btk = st.number_input("Biaya Tenaga Kerja", min_value=0)
-        bop = st.number_input("Biaya Overhead", min_value=0)
+        bbb = st.number_input("Biaya Bahan Baku (BBB)", min_value=0)
+        bbp = st.number_input("Biaya Bahan Penolong (BBP)", min_value=0)
+        btk = st.number_input("Biaya Tenaga Kerja (BTK)", min_value=0)
+        
+        st.divider()
+        st.markdown("##### 🛠️ Rincian BOP")
+        # FITUR BARU: Penggolongan BOP
+        gol_bop = st.selectbox("Pilih Penggolongan BOP", 
+                             ["Berdasarkan Sifat", "Berdasarkan Perilaku Biaya", "Berdasarkan Departemen"])
+        
+        if gol_bop == "Berdasarkan Sifat":
+            bop_1 = st.number_input("Biaya Reparasi & Pemeliharaan", min_value=0)
+            bop_2 = st.number_input("Biaya Depresiasi Aktiva Tetap", min_value=0)
+            bop_3 = st.number_input("Biaya Listrik & Air Pabrik", min_value=0)
+        elif gol_bop == "Berdasarkan Perilaku Biaya":
+            bop_1 = st.number_input("BOP Variabel", min_value=0)
+            bop_2 = st.number_input("BOP Tetap", min_value=0)
+            bop_3 = st.number_input("BOP Semivariabel", min_value=0)
+        else:
+            bop_1 = st.number_input("BOP Langsung Departemen", min_value=0)
+            bop_2 = st.number_input("BOP Tidak Langsung Departemen", min_value=0)
+            bop_3 = st.number_input("BOP Jasa Pembantu", min_value=0)
+            
+        bop = bop_1 + bop_2 + bop_3 # Total BOP otomatis terjumlah
+        st.caption(f"**Total BOP Terhitung: {format_rp(bop)}**")
         st.markdown('</div>', unsafe_allow_html=True)
 
     with c3:
+        # ... (Bagian Progress PDP tetap sama seperti kode sebelumnya)
         st.markdown('<div class="input-box">', unsafe_allow_html=True)
         st.markdown("#### 📈 Progress PDP (%)")
         st.image("https://img.icons8.com/3d-fluency/94/bar-chart.png", width=60)
@@ -183,7 +205,6 @@ elif menu == "🏭 Perhitungan HPP":
         tp_btk = st.number_input("Penyelesaian BTK (%)", 0, 100, 50) / 100
         tp_bop = st.number_input("Penyelesaian BOP (%)", 0, 100, 50) / 100
         st.markdown('</div>', unsafe_allow_html=True)
-
     if st.button("🚀 HITUNG HPP SEKARANG"):
         ue_bbb, ue_bbp = jadi + (pdp * tp_bbb), jadi + (pdp * tp_bbp)
         ue_btk, ue_bop = jadi + (pdp * tp_btk), jadi + (pdp * tp_bop)
@@ -333,6 +354,7 @@ with st.expander("🚨 PERINGATAN: Tidak boleh menggunakan atau menambah titik (
     3.  *Cek Peringatan Merah*: Jika muncul kotak merah di bawah kolom input, segera hapus titik pada angka yang Anda masukkan.
     """)
     
+
 
 
 

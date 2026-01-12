@@ -225,7 +225,7 @@ elif menu == "🏭 Perhitungan HPP":
          # Simpan ke Session State
         st.session_state.data_hpp = {
             'total_u': total_u, 'h_jadi': h_jadi, 'h_pdp': h_pdp, 'unit_jadi': jadi,
-            'bbb': bbb, 'bbp': bbp, 'btk': btk, 'bop': bop_total
+            'bbb': bbb, 'bbp': bbp, 'btk': btk, 'bop': bop
         }
 
         st.divider()
@@ -255,7 +255,7 @@ elif menu == "🏭 Perhitungan HPP":
                 st.markdown(f'<div class="ue-modern"><span>UE {l}</span><span class="ue-val">{format_angka(v)}</span></div>', unsafe_allow_html=True)
 
         # Pie Chart Distribusi Biaya
-            biaya_data = {"Komponen": ["BBB", "BBP", "BTK", "BOP"], "Nilai": [bbb, bbp, btk, bop_total]}
+            biaya_data = {"Komponen": ["BBB", "BBP", "BTK", "BOP"], "Nilai": [bbb, bbp, btk, bop]}
             fig = px.pie(biaya_data, values='Nilai', names='Komponen', hole=0.4, color_discrete_sequence=px.colors.sequential.RdBu)
             fig.update_layout(showlegend=False, height=250, margin=dict(t=0, b=0, l=0, r=0), paper_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig, use_container_width=True)
@@ -362,6 +362,7 @@ with st.expander("🚨 PERINGATAN: Tidak boleh menggunakan atau menambah titik (
     3.  *Cek Peringatan Merah*: Jika muncul kotak merah di bawah kolom input, segera hapus titik pada angka yang Anda masukkan.
     """)
     
+
 
 
 

@@ -1,5 +1,5 @@
 import streamlit as st
-
+import plotly.express as px
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="Kalkulator HPP Akuntansi", page_icon="📊", layout="wide")
 
@@ -174,6 +174,7 @@ elif menu == "🏭 Perhitungan HPP":
         
         st.divider()
         st.markdown("##### 🛠️ Rincian BOP")
+        
         # FITUR BARU: Penggolongan BOP
         gol_bop = st.selectbox("Pilih Penggolongan BOP", 
                              ["Berdasarkan Sifat", "Berdasarkan Perilaku Biaya", "Berdasarkan Departemen"])
@@ -205,6 +206,7 @@ elif menu == "🏭 Perhitungan HPP":
         tp_btk = st.number_input("Penyelesaian BTK (%)", 0, 100, 50) / 100
         tp_bop = st.number_input("Penyelesaian BOP (%)", 0, 100, 50) / 100
         st.markdown('</div>', unsafe_allow_html=True)
+        
     if st.button("🚀 HITUNG HPP SEKARANG"):
         ue_bbb, ue_bbp = jadi + (pdp * tp_bbb), jadi + (pdp * tp_bbp)
         ue_btk, ue_bop = jadi + (pdp * tp_btk), jadi + (pdp * tp_bop)
@@ -218,12 +220,10 @@ elif menu == "🏭 Perhitungan HPP":
         h_jadi = jadi * total_u
         h_pdp = (pdp*tp_bbb*u_bbb) + (pdp*tp_bbp*u_bbp) + (pdp*tp_btk*u_btk) + (pdp*tp_bop*u_bop)
 
-        # Simpan ke Session State
+         # Simpan ke Session State
         st.session_state.data_hpp = {
-            'total_u': total_u, 
-            'h_jadi': h_jadi, 
-            'h_pdp': h_pdp, 
-            'unit_jadi': jadi
+            'total_u': total_u, 'h_jadi': h_jadi, 'h_pdp': h_pdp, 'unit_jadi': jadi,
+            'bbb': bbb, 'bbp': bbp, 'btk': btk, 'bop': bop_in
         }
 
         st.divider()
@@ -251,6 +251,12 @@ elif menu == "🏭 Perhitungan HPP":
             st.markdown("#### 📏 Unit Ekuivalen")
             for l, v in [("BBB", ue_bbb), ("BBP", ue_bbp), ("BTK", ue_btk), ("BOP", ue_bop)]:
                 st.markdown(f'<div class="ue-modern"><span>UE {l}</span><span class="ue-val">{format_angka(v)}</span></div>', unsafe_allow_html=True)
+
+        # Pie Chart Distribusi Biaya
+            biaya_data = {"Komponen": ["BBB", "BBP", "BTK", "BOP"], "Nilai": [bbb, bbp, btk, bop_in]}
+            fig = px.pie(biaya_data, values='Nilai', names='Komponen', hole=0.4, color_discrete_sequence=px.colors.sequential.RdBu)
+            fig.update_layout(showlegend=False, height=250, margin=dict(t=0, b=0, l=0, r=0), paper_bgcolor='rgba(0,0,0,0)')
+            st.plotly_chart(fig, use_container_width=True)
         
         with st.expander("🔍 Lihat Rincian Langkah-Langkah"):
             st.markdown("#### 1. Unit Ekuivalen (UE)")
@@ -354,6 +360,7 @@ with st.expander("🚨 PERINGATAN: Tidak boleh menggunakan atau menambah titik (
     3.  *Cek Peringatan Merah*: Jika muncul kotak merah di bawah kolom input, segera hapus titik pada angka yang Anda masukkan.
     """)
     
+
 
 
 

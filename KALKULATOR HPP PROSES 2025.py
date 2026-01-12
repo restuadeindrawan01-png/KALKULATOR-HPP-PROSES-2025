@@ -174,7 +174,7 @@ elif menu == "🏭 Perhitungan HPP":
         bbp = st.number_input("Biaya Bahan Penolong (BBP)", min_value=0)
         btk = st.number_input("Biaya Tenaga Kerja (BTK)", min_value=0)
         
-       st.divider()
+        st.divider()
         st.markdown("##### 🛠️ Rincian BOP")
         
         # Pilihan penggolongan BOP termasuk input total manual
@@ -369,6 +369,7 @@ with st.expander("🚨 PERINGATAN: Tidak boleh menggunakan atau menambah titik (
     3.  *Cek Peringatan Merah*: Jika muncul kotak merah di bawah kolom input, segera hapus titik pada angka yang Anda masukkan.
     """)
     
+
 
 
 
